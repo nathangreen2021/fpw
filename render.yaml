@@ -1,0 +1,35 @@
+# One-click deploy on Render: New → Blueprint → pick this GitHub repo.
+# A persistent disk keeps the database + voice notes across deploys (requires a paid instance).
+services:
+  - type: web
+    name: fpw-fitplus-well
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/config
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TZ
+        value: Australia/Sydney
+      - key: DATA_DIR
+        value: /var/data
+      - key: SEED_DEMO
+        value: "false"
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: PUBLIC_URL
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ALERT_WEBHOOK_URL
+        sync: false
+    disk:
+      name: fpw-data
+      mountPath: /var/data
+      sizeGB: 1

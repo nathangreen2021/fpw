@@ -1,0 +1,1021 @@
+{
+  "users": [
+    {
+      "id": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "name": "Sarah Mitchell",
+      "email": "sarah@demo.app",
+      "passHash": "$2a$08$MUdzRqHA0lxmjIKdvOzVnOBloglbynQTktcK0ZMa9hsdDKno8pQ.W",
+      "createdAt": "2026-10-17T13:00:00.000Z",
+      "subStartedAt": "2026-10-17T13:00:00.000Z",
+      "plan": "monthly",
+      "subStatus": "active",
+      "subRenews": "2026-11-17T02:59:08.964Z",
+      "adminNotes": "",
+      "raceName": "HYROX Sydney",
+      "raceDate": "2026-12-25"
+    },
+    {
+      "id": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "name": "Josh Nguyen",
+      "email": "josh@demo.app",
+      "passHash": "$2a$08$MUdzRqHA0lxmjIKdvOzVnOBloglbynQTktcK0ZMa9hsdDKno8pQ.W",
+      "createdAt": "2026-10-17T13:00:00.000Z",
+      "subStartedAt": "2026-10-17T13:00:00.000Z",
+      "plan": "weekly",
+      "subStatus": "active",
+      "subRenews": "2026-11-03T02:59:08.964Z",
+      "adminNotes": ""
+    },
+    {
+      "id": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "name": "Mia Rossi",
+      "email": "mia@demo.app",
+      "passHash": "$2a$08$MUdzRqHA0lxmjIKdvOzVnOBloglbynQTktcK0ZMa9hsdDKno8pQ.W",
+      "createdAt": "2026-10-17T13:00:00.000Z",
+      "subStartedAt": "2026-10-17T13:00:00.000Z",
+      "plan": "annual",
+      "subStatus": "active",
+      "subRenews": "2027-08-26T02:59:08.964Z",
+      "adminNotes": ""
+    },
+    {
+      "id": "cb7d2d98-4ad1-49c9-856e-264b9b875490",
+      "name": "Tom Baker",
+      "email": "tom@demo.app",
+      "passHash": "$2a$08$MUdzRqHA0lxmjIKdvOzVnOBloglbynQTktcK0ZMa9hsdDKno8pQ.W",
+      "createdAt": "2026-10-17T13:00:00.000Z",
+      "subStartedAt": null,
+      "plan": null,
+      "subStatus": "none",
+      "subRenews": null,
+      "adminNotes": ""
+    }
+  ],
+  "workouts": [
+    {
+      "id": "03a9eea9-2276-468f-9200-756bbc3f27ba",
+      "date": "2026-10-19",
+      "title": "Compromised Running",
+      "focus": "Engine + Strength",
+      "notes": "Run splits should stay within 10 s of each other. If round 4 is 20 s+ slower, you went out too hot.",
+      "duration": 60,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "10 min",
+          "details": "500 m easy row\n2 rounds: 10 air squats, 10 walking lunges, 5 inchworms, 10 band pull-aparts\n3 × 20 s strides building to race pace"
+        },
+        {
+          "title": "Strength — Back Squat",
+          "format": "5 × 5 @ 75% · rest 2:00",
+          "details": "3 s lowering, drive up hard\nLog a heavy single if you test your 1RM",
+          "pbEvent": "back_squat_1rm"
+        },
+        {
+          "title": "Compromised Runs",
+          "format": "4 rounds for time · rest 2:00",
+          "details": "1 km run @ HYROX race pace\n20 wall balls (9 kg / 6 kg)\n15 cal SkiErg\nGoal: hold the same run split every round",
+          "pbEvent": "run_1k"
+        },
+        {
+          "title": "Cool-down",
+          "format": "8 min",
+          "details": "Easy walk 3 min\nCouch stretch 1 min / side\nPigeon 1 min / side"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "d7e3b3d4-c9f4-4f26-906d-4e5b1832a3b3",
+      "date": "2026-10-20",
+      "title": "Threshold + Sled Work",
+      "focus": "Stations",
+      "notes": "Threshold = \"comfortably hard\". You should only manage 3–4 words at a time.",
+      "duration": 60,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "10 min",
+          "details": "5 min easy SkiErg\nHip airplanes, world’s greatest stretch\n2 × 10 m light sled push + pull"
+        },
+        {
+          "title": "Sled Skill",
+          "format": "6 sets · rest 1:30",
+          "details": "15 m sled push (race weight +10%)\n15 m sled pull, hand-over-hand\nLow hips, short choppy steps, arms locked",
+          "pbEvent": "sled_push_50"
+        },
+        {
+          "title": "Threshold Row",
+          "format": "5 × 1000 m · rest 1:30",
+          "details": "Pace you could hold for ~20 min\nDamper 5–6, rate 26–30\nLog your fastest 1000 m",
+          "pbEvent": "row_1000"
+        },
+        {
+          "title": "Accessory",
+          "format": "3 rounds",
+          "details": "12 single-arm DB rows / side\n30 s hollow hold\n10 Copenhagen plank lifts / side"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "7d7ea649-839e-4890-a0fd-918d90d23e6f",
+      "date": "2026-10-21",
+      "title": "Aerobic Base",
+      "focus": "Zone 2",
+      "notes": "Easy means easy. This session builds the engine that makes Friday possible.",
+      "duration": 70,
+      "blocks": [
+        {
+          "title": "Zone 2 Flush",
+          "format": "45–60 min continuous",
+          "details": "15 min run\n15 min SkiErg\n15 min run\nOptional: 15 min row\nNasal breathing only — 60–70% max HR"
+        },
+        {
+          "title": "Mobility",
+          "format": "15 min",
+          "details": "90/90 hip switches 2 × 10\nThoracic openers 2 × 8 / side\nCalf + ankle rocks 2 × 15\nDeep squat hold 2 × 60 s"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "cd3f8cd8-9205-4247-a2bb-b7034b6b5ddd",
+      "date": "2026-10-22",
+      "title": "Strength Endurance",
+      "focus": "Legs + Lunges",
+      "notes": "Lunges: back knee touches the floor every rep — no-reps in the race cost time.",
+      "duration": 65,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "10 min",
+          "details": "1 km easy jog\nGlute bridges 2 × 15\nLateral band walks 2 × 10 / side"
+        },
+        {
+          "title": "Strength — Deadlift",
+          "format": "4 × 6 @ 75–80% · rest 2:00",
+          "details": "Brace, push the floor away\nLog a heavy single if you test your 1RM",
+          "pbEvent": "deadlift_1rm"
+        },
+        {
+          "title": "Station Grind",
+          "format": "3 rounds · rest 2:00",
+          "details": "50 m sandbag lunges (20 kg / 10 kg)\n100 m farmers carry (2 × 24 kg / 2 × 16 kg)\n20 burpee broad jumps\n400 m run",
+          "pbEvent": "lunges_100"
+        },
+        {
+          "title": "Finisher — 1 km Time Trial",
+          "format": "1 × max effort",
+          "details": "Run 1 km as fast as you can on tired legs\nThis is your \"compromised 1 km\" benchmark",
+          "pbEvent": "run_1k"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "c355a63f-4c8f-47ff-b352-5d6185b27c59",
+      "date": "2026-10-23",
+      "title": "Half HYROX Simulation",
+      "focus": "Race Practice",
+      "notes": "Treat this like race day: same shoes, same fuel, same warm-up. Use a voice note to tell me where you lost time.",
+      "duration": 75,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "15 min",
+          "details": "800 m easy run\n2 rounds: 250 m Ski, 250 m row, 5 burpee broad jumps\n2 × 100 m strides"
+        },
+        {
+          "title": "Half Simulation",
+          "format": "For time · 50 min cap",
+          "details": "1 km run + 1000 m SkiErg\n1 km run + 50 m sled push\n1 km run + 50 m sled pull\n1 km run + 80 m burpee broad jumps\nRecord total time and each station split",
+          "pbEvent": "half_sim"
+        },
+        {
+          "title": "Cool-down",
+          "format": "10 min",
+          "details": "Easy walk + full-body stretch\nRefuel within 60 min"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "3d588647-cef2-48b6-8d33-ed64ae9f76f1",
+      "date": "2026-10-26",
+      "title": "Compromised Running",
+      "focus": "Engine + Strength",
+      "notes": "Run splits should stay within 10 s of each other. If round 4 is 20 s+ slower, you went out too hot.",
+      "duration": 60,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "10 min",
+          "details": "500 m easy row\n2 rounds: 10 air squats, 10 walking lunges, 5 inchworms, 10 band pull-aparts\n3 × 20 s strides building to race pace"
+        },
+        {
+          "title": "Strength — Back Squat",
+          "format": "5 × 5 @ 75% · rest 2:00",
+          "details": "3 s lowering, drive up hard\nLog a heavy single if you test your 1RM",
+          "pbEvent": "back_squat_1rm"
+        },
+        {
+          "title": "Compromised Runs",
+          "format": "4 rounds for time · rest 2:00",
+          "details": "1 km run @ HYROX race pace\n20 wall balls (9 kg / 6 kg)\n15 cal SkiErg\nGoal: hold the same run split every round",
+          "pbEvent": "run_1k"
+        },
+        {
+          "title": "Cool-down",
+          "format": "8 min",
+          "details": "Easy walk 3 min\nCouch stretch 1 min / side\nPigeon 1 min / side"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "83107235-5a44-4b43-b812-cee844d3cf53",
+      "date": "2026-10-27",
+      "title": "Threshold + Sled Work",
+      "focus": "Stations",
+      "notes": "Threshold = \"comfortably hard\". You should only manage 3–4 words at a time.",
+      "duration": 60,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "10 min",
+          "details": "5 min easy SkiErg\nHip airplanes, world’s greatest stretch\n2 × 10 m light sled push + pull"
+        },
+        {
+          "title": "Sled Skill",
+          "format": "6 sets · rest 1:30",
+          "details": "15 m sled push (race weight +10%)\n15 m sled pull, hand-over-hand\nLow hips, short choppy steps, arms locked",
+          "pbEvent": "sled_push_50"
+        },
+        {
+          "title": "Threshold Row",
+          "format": "5 × 1000 m · rest 1:30",
+          "details": "Pace you could hold for ~20 min\nDamper 5–6, rate 26–30\nLog your fastest 1000 m",
+          "pbEvent": "row_1000"
+        },
+        {
+          "title": "Accessory",
+          "format": "3 rounds",
+          "details": "12 single-arm DB rows / side\n30 s hollow hold\n10 Copenhagen plank lifts / side"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "2e05554e-42bf-47e3-bb48-c92332bb3d55",
+      "date": "2026-10-28",
+      "title": "Aerobic Base",
+      "focus": "Zone 2",
+      "notes": "Easy means easy. This session builds the engine that makes Friday possible.",
+      "duration": 70,
+      "blocks": [
+        {
+          "title": "Zone 2 Flush",
+          "format": "45–60 min continuous",
+          "details": "15 min run\n15 min SkiErg\n15 min run\nOptional: 15 min row\nNasal breathing only — 60–70% max HR"
+        },
+        {
+          "title": "Mobility",
+          "format": "15 min",
+          "details": "90/90 hip switches 2 × 10\nThoracic openers 2 × 8 / side\nCalf + ankle rocks 2 × 15\nDeep squat hold 2 × 60 s"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "66d86f42-6c1f-4b18-a54a-9aca3ea2abe3",
+      "date": "2026-10-29",
+      "title": "Strength Endurance",
+      "focus": "Legs + Lunges",
+      "notes": "Lunges: back knee touches the floor every rep — no-reps in the race cost time.",
+      "duration": 65,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "10 min",
+          "details": "1 km easy jog\nGlute bridges 2 × 15\nLateral band walks 2 × 10 / side"
+        },
+        {
+          "title": "Strength — Deadlift",
+          "format": "4 × 6 @ 75–80% · rest 2:00",
+          "details": "Brace, push the floor away\nLog a heavy single if you test your 1RM",
+          "pbEvent": "deadlift_1rm"
+        },
+        {
+          "title": "Station Grind",
+          "format": "3 rounds · rest 2:00",
+          "details": "50 m sandbag lunges (20 kg / 10 kg)\n100 m farmers carry (2 × 24 kg / 2 × 16 kg)\n20 burpee broad jumps\n400 m run",
+          "pbEvent": "lunges_100"
+        },
+        {
+          "title": "Finisher — 1 km Time Trial",
+          "format": "1 × max effort",
+          "details": "Run 1 km as fast as you can on tired legs\nThis is your \"compromised 1 km\" benchmark",
+          "pbEvent": "run_1k"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "83faf13e-b8a5-4bd2-9021-479445c298b2",
+      "date": "2026-10-30",
+      "title": "Half HYROX Simulation",
+      "focus": "Race Practice",
+      "notes": "Treat this like race day: same shoes, same fuel, same warm-up. Use a voice note to tell me where you lost time.",
+      "duration": 75,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "15 min",
+          "details": "800 m easy run\n2 rounds: 250 m Ski, 250 m row, 5 burpee broad jumps\n2 × 100 m strides"
+        },
+        {
+          "title": "Half Simulation",
+          "format": "For time · 50 min cap",
+          "details": "1 km run + 1000 m SkiErg\n1 km run + 50 m sled push\n1 km run + 50 m sled pull\n1 km run + 80 m burpee broad jumps\nRecord total time and each station split",
+          "pbEvent": "half_sim"
+        },
+        {
+          "title": "Cool-down",
+          "format": "10 min",
+          "details": "Easy walk + full-body stretch\nRefuel within 60 min"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "53277dfd-8b61-4828-a410-4b9964d40ab7",
+      "date": "2026-11-02",
+      "title": "Compromised Running",
+      "focus": "Engine + Strength",
+      "notes": "Run splits should stay within 10 s of each other. If round 4 is 20 s+ slower, you went out too hot.",
+      "duration": 60,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "10 min",
+          "details": "500 m easy row\n2 rounds: 10 air squats, 10 walking lunges, 5 inchworms, 10 band pull-aparts\n3 × 20 s strides building to race pace"
+        },
+        {
+          "title": "Strength — Back Squat",
+          "format": "5 × 5 @ 75% · rest 2:00",
+          "details": "3 s lowering, drive up hard\nLog a heavy single if you test your 1RM",
+          "pbEvent": "back_squat_1rm"
+        },
+        {
+          "title": "Compromised Runs",
+          "format": "4 rounds for time · rest 2:00",
+          "details": "1 km run @ HYROX race pace\n20 wall balls (9 kg / 6 kg)\n15 cal SkiErg\nGoal: hold the same run split every round",
+          "pbEvent": "run_1k"
+        },
+        {
+          "title": "Cool-down",
+          "format": "8 min",
+          "details": "Easy walk 3 min\nCouch stretch 1 min / side\nPigeon 1 min / side"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "b3a9df3d-e60d-4f87-ad44-9096a6c00e82",
+      "date": "2026-11-03",
+      "title": "Threshold + Sled Work",
+      "focus": "Stations",
+      "notes": "Threshold = \"comfortably hard\". You should only manage 3–4 words at a time.",
+      "duration": 60,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "10 min",
+          "details": "5 min easy SkiErg\nHip airplanes, world’s greatest stretch\n2 × 10 m light sled push + pull"
+        },
+        {
+          "title": "Sled Skill",
+          "format": "6 sets · rest 1:30",
+          "details": "15 m sled push (race weight +10%)\n15 m sled pull, hand-over-hand\nLow hips, short choppy steps, arms locked",
+          "pbEvent": "sled_push_50"
+        },
+        {
+          "title": "Threshold Row",
+          "format": "5 × 1000 m · rest 1:30",
+          "details": "Pace you could hold for ~20 min\nDamper 5–6, rate 26–30\nLog your fastest 1000 m",
+          "pbEvent": "row_1000"
+        },
+        {
+          "title": "Accessory",
+          "format": "3 rounds",
+          "details": "12 single-arm DB rows / side\n30 s hollow hold\n10 Copenhagen plank lifts / side"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "4c75388e-f115-49cf-87bb-1366b0efbb2b",
+      "date": "2026-11-04",
+      "title": "Aerobic Base",
+      "focus": "Zone 2",
+      "notes": "Easy means easy. This session builds the engine that makes Friday possible.",
+      "duration": 70,
+      "blocks": [
+        {
+          "title": "Zone 2 Flush",
+          "format": "45–60 min continuous",
+          "details": "15 min run\n15 min SkiErg\n15 min run\nOptional: 15 min row\nNasal breathing only — 60–70% max HR"
+        },
+        {
+          "title": "Mobility",
+          "format": "15 min",
+          "details": "90/90 hip switches 2 × 10\nThoracic openers 2 × 8 / side\nCalf + ankle rocks 2 × 15\nDeep squat hold 2 × 60 s"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "1b0524fb-eaae-4014-9ffc-4e22a8b125b2",
+      "date": "2026-11-05",
+      "title": "Strength Endurance",
+      "focus": "Legs + Lunges",
+      "notes": "Lunges: back knee touches the floor every rep — no-reps in the race cost time.",
+      "duration": 65,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "10 min",
+          "details": "1 km easy jog\nGlute bridges 2 × 15\nLateral band walks 2 × 10 / side"
+        },
+        {
+          "title": "Strength — Deadlift",
+          "format": "4 × 6 @ 75–80% · rest 2:00",
+          "details": "Brace, push the floor away\nLog a heavy single if you test your 1RM",
+          "pbEvent": "deadlift_1rm"
+        },
+        {
+          "title": "Station Grind",
+          "format": "3 rounds · rest 2:00",
+          "details": "50 m sandbag lunges (20 kg / 10 kg)\n100 m farmers carry (2 × 24 kg / 2 × 16 kg)\n20 burpee broad jumps\n400 m run",
+          "pbEvent": "lunges_100"
+        },
+        {
+          "title": "Finisher — 1 km Time Trial",
+          "format": "1 × max effort",
+          "details": "Run 1 km as fast as you can on tired legs\nThis is your \"compromised 1 km\" benchmark",
+          "pbEvent": "run_1k"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    },
+    {
+      "id": "ccdbe5d2-cd4e-4ceb-8a96-3abaa5596ba6",
+      "date": "2026-11-06",
+      "title": "Half HYROX Simulation",
+      "focus": "Race Practice",
+      "notes": "Treat this like race day: same shoes, same fuel, same warm-up. Use a voice note to tell me where you lost time.",
+      "duration": 75,
+      "blocks": [
+        {
+          "title": "Warm-up",
+          "format": "15 min",
+          "details": "800 m easy run\n2 rounds: 250 m Ski, 250 m row, 5 burpee broad jumps\n2 × 100 m strides"
+        },
+        {
+          "title": "Half Simulation",
+          "format": "For time · 50 min cap",
+          "details": "1 km run + 1000 m SkiErg\n1 km run + 50 m sled push\n1 km run + 50 m sled pull\n1 km run + 80 m burpee broad jumps\nRecord total time and each station split",
+          "pbEvent": "half_sim"
+        },
+        {
+          "title": "Cool-down",
+          "format": "10 min",
+          "details": "Easy walk + full-body stretch\nRefuel within 60 min"
+        }
+      ],
+      "published": true,
+      "createdAt": "2026-10-30T02:59:08.941Z"
+    }
+  ],
+  "completions": [
+    {
+      "id": "b74f53b8-5366-44ec-b4ea-c85c5a98055d",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "workoutId": "03a9eea9-2276-468f-9200-756bbc3f27ba",
+      "date": "2026-10-19",
+      "rpe": 6,
+      "durationMin": 55,
+      "notes": "",
+      "completedAt": "2026-10-19T07:00:00.000Z"
+    },
+    {
+      "id": "cc90c00e-1d41-491a-889c-99f493bb7f53",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "workoutId": "d7e3b3d4-c9f4-4f26-906d-4e5b1832a3b3",
+      "date": "2026-10-20",
+      "rpe": 7,
+      "durationMin": 60,
+      "notes": "",
+      "completedAt": "2026-10-20T07:00:00.000Z"
+    },
+    {
+      "id": "c1a75f2a-bc81-4147-b66d-00653193977c",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "workoutId": "7d7ea649-839e-4890-a0fd-918d90d23e6f",
+      "date": "2026-10-21",
+      "rpe": 8,
+      "durationMin": 65,
+      "notes": "",
+      "completedAt": "2026-10-21T07:00:00.000Z"
+    },
+    {
+      "id": "e1aaa7d7-87af-4c2e-bcc6-d478e74703a8",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "workoutId": "cd3f8cd8-9205-4247-a2bb-b7034b6b5ddd",
+      "date": "2026-10-22",
+      "rpe": 6,
+      "durationMin": 70,
+      "notes": "",
+      "completedAt": "2026-10-22T07:00:00.000Z"
+    },
+    {
+      "id": "a526def6-78c3-4495-b0bb-44b23cd69b12",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "workoutId": "c355a63f-4c8f-47ff-b352-5d6185b27c59",
+      "date": "2026-10-23",
+      "rpe": 7,
+      "durationMin": 55,
+      "notes": "",
+      "completedAt": "2026-10-23T07:00:00.000Z"
+    },
+    {
+      "id": "b14a136d-34e0-408c-8f16-5867cbdb3cd3",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "workoutId": "3d588647-cef2-48b6-8d33-ed64ae9f76f1",
+      "date": "2026-10-26",
+      "rpe": 8,
+      "durationMin": 60,
+      "notes": "",
+      "completedAt": "2026-10-26T07:00:00.000Z"
+    },
+    {
+      "id": "9481959e-79c4-49fd-a641-03b7997f3427",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "workoutId": "83107235-5a44-4b43-b812-cee844d3cf53",
+      "date": "2026-10-27",
+      "rpe": 6,
+      "durationMin": 65,
+      "notes": "",
+      "completedAt": "2026-10-27T07:00:00.000Z"
+    },
+    {
+      "id": "4fc79f8e-e651-49a3-b89d-38d98fa25e86",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "workoutId": "2e05554e-42bf-47e3-bb48-c92332bb3d55",
+      "date": "2026-10-28",
+      "rpe": 7,
+      "durationMin": 70,
+      "notes": "",
+      "completedAt": "2026-10-28T07:00:00.000Z"
+    },
+    {
+      "id": "27b176b2-d875-491d-bec6-cb025a785096",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "workoutId": "66d86f42-6c1f-4b18-a54a-9aca3ea2abe3",
+      "date": "2026-10-29",
+      "rpe": 8,
+      "durationMin": 55,
+      "notes": "",
+      "completedAt": "2026-10-29T07:00:00.000Z"
+    },
+    {
+      "id": "0bb73a99-47a0-4666-ad9a-e7557ca9bff5",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "workoutId": "03a9eea9-2276-468f-9200-756bbc3f27ba",
+      "date": "2026-10-19",
+      "rpe": 7,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-19T07:00:00.000Z"
+    },
+    {
+      "id": "263716e5-36b5-4f08-b6b3-2277d255d029",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "workoutId": "d7e3b3d4-c9f4-4f26-906d-4e5b1832a3b3",
+      "date": "2026-10-20",
+      "rpe": 7,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-20T07:00:00.000Z"
+    },
+    {
+      "id": "86f86091-8434-4243-a8c4-aedf1ca8357b",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "workoutId": "7d7ea649-839e-4890-a0fd-918d90d23e6f",
+      "date": "2026-10-21",
+      "rpe": 7,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-21T07:00:00.000Z"
+    },
+    {
+      "id": "8bb2ffca-a71a-4fd0-98ac-c356e6331f62",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "workoutId": "cd3f8cd8-9205-4247-a2bb-b7034b6b5ddd",
+      "date": "2026-10-22",
+      "rpe": 7,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-22T07:00:00.000Z"
+    },
+    {
+      "id": "35bdde36-5b4b-4e9d-b059-0cec34d0938a",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "workoutId": "c355a63f-4c8f-47ff-b352-5d6185b27c59",
+      "date": "2026-10-23",
+      "rpe": 7,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-23T07:00:00.000Z"
+    },
+    {
+      "id": "ebd49bf4-2a8d-496a-972f-f5c92eb4892e",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "workoutId": "3d588647-cef2-48b6-8d33-ed64ae9f76f1",
+      "date": "2026-10-26",
+      "rpe": 7,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-26T07:00:00.000Z"
+    },
+    {
+      "id": "7d53e97c-74c7-47b4-8172-871f17deb230",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "workoutId": "83107235-5a44-4b43-b812-cee844d3cf53",
+      "date": "2026-10-27",
+      "rpe": 7,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-27T07:00:00.000Z"
+    },
+    {
+      "id": "623bd9de-2070-4a58-b07f-27b7938dd1be",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "workoutId": "03a9eea9-2276-468f-9200-756bbc3f27ba",
+      "date": "2026-10-19",
+      "rpe": 5,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-19T07:00:00.000Z"
+    },
+    {
+      "id": "f6b8eb06-58d0-4923-a0c5-6b0d795a788d",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "workoutId": "d7e3b3d4-c9f4-4f26-906d-4e5b1832a3b3",
+      "date": "2026-10-20",
+      "rpe": 6,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-20T07:00:00.000Z"
+    },
+    {
+      "id": "f18dedbf-82e5-4fc7-9b67-d319a3b7d5b4",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "workoutId": "cd3f8cd8-9205-4247-a2bb-b7034b6b5ddd",
+      "date": "2026-10-22",
+      "rpe": 8,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-22T07:00:00.000Z"
+    },
+    {
+      "id": "b6153578-caac-4f96-aa6f-f4230807787f",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "workoutId": "c355a63f-4c8f-47ff-b352-5d6185b27c59",
+      "date": "2026-10-23",
+      "rpe": 5,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-23T07:00:00.000Z"
+    },
+    {
+      "id": "a8bf4710-505b-4633-b1b9-e8335e46728e",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "workoutId": "3d588647-cef2-48b6-8d33-ed64ae9f76f1",
+      "date": "2026-10-26",
+      "rpe": 6,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-26T07:00:00.000Z"
+    },
+    {
+      "id": "96ec452f-b623-4c4f-8e6d-64a9057eacbe",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "workoutId": "83107235-5a44-4b43-b812-cee844d3cf53",
+      "date": "2026-10-27",
+      "rpe": 7,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-27T07:00:00.000Z"
+    },
+    {
+      "id": "0ba35f9b-2ce2-440d-8c55-2b70dfbe0a7f",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "workoutId": "2e05554e-42bf-47e3-bb48-c92332bb3d55",
+      "date": "2026-10-28",
+      "rpe": 8,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-28T07:00:00.000Z"
+    },
+    {
+      "id": "df002f4b-8c56-4ea7-94c0-eed6e0f05b75",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "workoutId": "66d86f42-6c1f-4b18-a54a-9aca3ea2abe3",
+      "date": "2026-10-29",
+      "rpe": 5,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-29T07:00:00.000Z"
+    }
+  ],
+  "voiceNotes": [
+    {
+      "id": "f0e2fb45-57c6-4adf-931d-bb16be547515",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "workoutId": "66d86f42-6c1f-4b18-a54a-9aca3ea2abe3",
+      "transcript": "Felt really strong today. Smashed the wall balls unbroken and I think I got a PB on the 1k, legs felt fresh the whole way.",
+      "audioFile": null,
+      "summary": {
+        "mood": "great",
+        "score": 5,
+        "headline": "Felt really strong today.",
+        "summary": "Great session, mentions a PB.",
+        "flags": [
+          "pb"
+        ],
+        "coachAction": "Celebrate the win publicly — great moment to reinforce momentum.",
+        "engine": "heuristic"
+      },
+      "createdAt": "2026-10-29T08:00:00.000Z"
+    },
+    {
+      "id": "a868e5a1-2d3f-4430-97ae-befcf25d420a",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "workoutId": "66d86f42-6c1f-4b18-a54a-9aca3ea2abe3",
+      "transcript": "Struggled a bit today, got a twinge of pain in my left knee on the lunges so I scaled the last round. Not sure if I should run tomorrow.",
+      "audioFile": null,
+      "summary": {
+        "mood": "concern",
+        "score": 1,
+        "headline": "Struggled a bit today, got a twinge of pain in my left knee on the lunges so I scaled t…",
+        "summary": "Possible concern, reports pain (knee).",
+        "flags": [
+          "injury"
+        ],
+        "coachAction": "Check in today about the knee and consider modifying the next session.",
+        "engine": "heuristic"
+      },
+      "createdAt": "2026-10-29T08:00:00.000Z"
+    },
+    {
+      "id": "c6245fec-1b5f-46db-8406-dac980b3d42b",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "workoutId": "83107235-5a44-4b43-b812-cee844d3cf53",
+      "transcript": "Pretty tired, work has been super busy and stressful this week. Got through it but the runs felt heavy.",
+      "audioFile": null,
+      "summary": {
+        "mood": "tough",
+        "score": 2,
+        "headline": "Pretty tired, work has been super busy and stressful this week.",
+        "summary": "Tough session, outside stress mentioned.",
+        "flags": [
+          "life"
+        ],
+        "coachAction": "Send an encouraging message and consider scaling the next session.",
+        "engine": "heuristic"
+      },
+      "createdAt": "2026-10-27T08:00:00.000Z"
+    }
+  ],
+  "results": [
+    {
+      "id": "e4323212-c4bd-4f16-9551-2f7f3740c18b",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "event": "run_1k",
+      "value": 220,
+      "date": "2026-10-19",
+      "createdAt": "2026-10-19T08:00:00.000Z"
+    },
+    {
+      "id": "0c5355f0-8a1d-468c-bc15-c50ee2e10927",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "event": "run_1k",
+      "value": 205,
+      "date": "2026-10-22",
+      "createdAt": "2026-10-22T08:00:00.000Z"
+    },
+    {
+      "id": "ee6b89a0-e821-4c67-939b-a1fa758eefb7",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "event": "row_1000",
+      "value": 225,
+      "date": "2026-10-20",
+      "createdAt": "2026-10-20T08:00:00.000Z"
+    },
+    {
+      "id": "935191f3-c3e6-42ea-92a4-07d18440d214",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "event": "ski_1000",
+      "value": 245,
+      "date": "2026-10-23",
+      "createdAt": "2026-10-23T08:00:00.000Z"
+    },
+    {
+      "id": "f67b005f-a5a6-4989-bf69-c6e0e081c351",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "event": "half_sim",
+      "value": 2300,
+      "date": "2026-10-23",
+      "createdAt": "2026-10-23T08:00:00.000Z"
+    },
+    {
+      "id": "fab53bc6-ec46-4f69-9f9e-e5bccdaf2b7a",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "event": "back_squat_1rm",
+      "value": 85,
+      "date": "2026-10-19",
+      "createdAt": "2026-10-19T08:00:00.000Z"
+    },
+    {
+      "id": "3d99aa20-5260-4e3e-a712-cf3d37ccd8de",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "event": "lunges_100",
+      "value": 340,
+      "date": "2026-10-22",
+      "createdAt": "2026-10-22T08:00:00.000Z"
+    },
+    {
+      "id": "c8726adc-3f60-456e-8e09-15a4672fa9a2",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "event": "run_1k",
+      "value": 190,
+      "date": "2026-10-19",
+      "createdAt": "2026-10-19T08:00:00.000Z"
+    },
+    {
+      "id": "0355a6a9-acb4-4c64-b2eb-f195fc990837",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "event": "row_1000",
+      "value": 210,
+      "date": "2026-10-20",
+      "createdAt": "2026-10-20T08:00:00.000Z"
+    },
+    {
+      "id": "d01b859d-eda3-48a2-8b86-e1132da154a7",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "event": "ski_1000",
+      "value": 235,
+      "date": "2026-10-23",
+      "createdAt": "2026-10-23T08:00:00.000Z"
+    },
+    {
+      "id": "10491960-e582-41e8-8876-23c2df0c96de",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "event": "half_sim",
+      "value": 2145,
+      "date": "2026-10-23",
+      "createdAt": "2026-10-23T08:00:00.000Z"
+    },
+    {
+      "id": "d8a21bd5-68c7-41df-8672-f70ff48040b4",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "event": "back_squat_1rm",
+      "value": 120,
+      "date": "2026-10-19",
+      "createdAt": "2026-10-19T08:00:00.000Z"
+    },
+    {
+      "id": "29224067-8ff8-4544-834e-eae9ec6e6f8d",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "event": "deadlift_1rm",
+      "value": 170,
+      "date": "2026-10-22",
+      "createdAt": "2026-10-22T08:00:00.000Z"
+    },
+    {
+      "id": "36ddfb67-db33-4570-ab88-d97b65804433",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "event": "run_1k",
+      "value": 228,
+      "date": "2026-10-22",
+      "createdAt": "2026-10-22T08:00:00.000Z"
+    },
+    {
+      "id": "53e672a0-89b5-4292-a082-3b2a4da85b1a",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "event": "row_1000",
+      "value": 242,
+      "date": "2026-10-20",
+      "createdAt": "2026-10-20T08:00:00.000Z"
+    },
+    {
+      "id": "e41bb84e-e352-4550-b8ab-02035545c38e",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "event": "ski_1000",
+      "value": 260,
+      "date": "2026-10-23",
+      "createdAt": "2026-10-23T08:00:00.000Z"
+    },
+    {
+      "id": "1ef656df-3d0c-4d29-ae13-323d5ddbd331",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "event": "wall_balls_100",
+      "value": 390,
+      "date": "2026-10-19",
+      "createdAt": "2026-10-19T08:00:00.000Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "503175f1-c856-4d3b-a34d-6c41f5ec440f",
+      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "plan": "monthly",
+      "amount": 9900,
+      "currency": "aud",
+      "status": "paid",
+      "source": "demo",
+      "ref": null,
+      "createdAt": "2026-10-21T02:59:08.973Z"
+    },
+    {
+      "id": "42f31dfd-d6b2-4d5f-99f2-1a1aedb43c17",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "plan": "weekly",
+      "amount": 2900,
+      "currency": "aud",
+      "status": "paid",
+      "source": "demo",
+      "ref": null,
+      "createdAt": "2026-10-20T02:59:08.973Z"
+    },
+    {
+      "id": "e299fe62-aa7f-4996-9d8d-18bfb61244b9",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "plan": "weekly",
+      "amount": 2900,
+      "currency": "aud",
+      "status": "paid",
+      "source": "demo",
+      "ref": null,
+      "createdAt": "2026-10-27T02:59:08.973Z"
+    },
+    {
+      "id": "bd55e06e-231b-445c-acfe-162dd70f8d35",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "plan": "annual",
+      "amount": 99900,
+      "currency": "aud",
+      "status": "paid",
+      "source": "demo",
+      "ref": null,
+      "createdAt": "2026-10-21T02:59:08.973Z"
+    }
+  ],
+  "alerts": [
+    {
+      "id": "d3518751-b727-4224-8764-60a365a70e76",
+      "key": "wellbeing:a868e5a1-2d3f-4430-97ae-befcf25d420a",
+      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "type": "wellbeing",
+      "message": "Mia Rossi flagged a possible concern after \"Strength Endurance\": Struggled a bit today, got a twinge of pain in my left knee on the lunges so I scaled t…",
+      "createdAt": "2026-10-30T02:59:08.973Z",
+      "resolved": false
+    },
+    {
+      "id": "76e64b11-82f5-4063-a53a-d639a28039df",
+      "key": "missed:fb97b167-8bdf-4da3-88b5-f0798bc5e002:2e05554e-42bf-47e3-bb48-c92332bb3d55",
+      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "type": "missed",
+      "message": "Josh Nguyen has missed 2 workouts in a row: Strength Endurance (2026-10-29), Aerobic Base (2026-10-28)",
+      "createdAt": "2026-10-30T02:59:08.979Z",
+      "resolved": false
+    }
+  ],
+  "sessions": []
+}
