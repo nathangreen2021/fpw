@@ -34,9 +34,6 @@ cp .env.example .env     # optional for local — sensible defaults are built in
 npm start
 ```
 
-- Athlete app: http://localhost:3000 — demo login `sarah@demo.app` / `demo1234` (also `josh@`, `mia@`)
-- Coach HQ: http://localhost:3000/admin — dev password `coach123` (set `ADMIN_PASSWORD` for real use)
-
 Without Stripe keys the app runs in **demo mode**: the payment step shows a simulated Apple Pay sheet so you can test the full flow. `npm run reset` wipes `data/` so it reseeds on next start.
 
 ## Payments & Apple Pay (Stripe)
