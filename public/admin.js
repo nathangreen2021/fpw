@@ -1,6 +1,7 @@
 // Coach HQ — admin / CRM
-const S = { config: null, view: 'dashboard', weekStart: null, members: [], memberFilter: 'all', memberQuery: '', openAlerts: 0, templates: null, editing: null };
-const PLAN_NAMES = { weekly: 'Weekly', monthly: 'Monthly', annual: 'Annual' };
+const S = { config: null, view: 'dashboard', weekStart: null, members: [], memberFilter: 'all', memberQuery: '', openAlerts: 0, templates: null, editing: null, progTab: 'week', programs: [], standardWeeks: [], prog: null };
+const planName = (pid) => { const p = S.config?.plans.find((x) => x.id === pid); return p ? `${p.tierName} · ${p.name}` : pid || '—'; };
+const kg = (n) => `${+n} kg`;
 const MOOD_COLORS = { great: 'var(--good)', good: '#7cb342', ok: 'var(--faint)', tough: 'var(--warn)', concern: 'var(--bad)' };
 const statusChip = (m) => {
   if (!m.plan || m.subStatus === 'none') return '<span class="chip">Lead</span>';
@@ -124,7 +125,7 @@ function drawMembers() {
     (S.memberFilter === 'all' || (S.memberFilter === 'active' && m.active) || (S.memberFilter === 'risk' && m.missedStreak >= 2) || (S.memberFilter === 'leads' && !m.active)));
   $('#m-body').innerHTML = rows.length ? rows.map((m) => `<tr data-act="openMember" data-id="${m.id}">
     <td><strong>${esc(m.name)}</strong>${m.openAlerts ? ' <span class="chip bad">alert</span>' : ''}<div class="sub">${esc(m.email)}</div></td>
-    <td>${esc(PLAN_NAMES[m.plan] || '—')}</td><td>${statusChip(m)}</td>
+    <td>${m.plan ? esc(planName(m.plan)) : '—'}</td><td>${statusChip(m)}</td>
     <td>${m.subRenews ? fmtDate(m.subRenews) : '—'}</td>
     <td>${m.lastWorkout ? fmtDate(m.lastWorkout, { weekday: 'short', day: 'numeric', month: 'short' }) : '—'}</td>
     <td>${m.compliance == null ? '—' : `<span class="bar"><i style="width:${m.compliance}%;background:${m.compliance < 50 ? 'var(--bad)' : m.compliance < 80 ? 'var(--warn)' : 'var(--good)'}"></i></span>${m.compliance}%`}</td>
@@ -148,10 +149,12 @@ actions.openMember = async (el) => {
     ${d.alerts.filter((a) => !a.resolved).map((a) => `<div class="banner warn" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span>${esc(a.message)}</span><button class="btn sm" data-act="resolve" data-id="${a.id}">Resolve</button></div>`).join('')}
     <form class="card form" data-form="saveMember" data-id="${m.id}" style="margin-bottom:14px">
       <div class="row2">
-        <label>Plan<select name="plan"><option value="">None</option>${Object.entries(PLAN_NAMES).map(([k, l]) => `<option value="${k}" ${m.plan === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+        <label>Plan<select name="plan"><option value="">None</option>${S.config.plans.map((p) => `<option value="${p.id}" ${m.plan === p.id ? 'selected' : ''}>${esc(p.tierName)} · ${esc(p.name)}</option>`).join('')}</select></label>
         <label>Status<select name="subStatus">${['active', 'cancelled', 'past_due', 'paused', 'none'].map((s) => `<option ${m.subStatus === s ? 'selected' : ''}>${s}</option>`).join('')}</select></label>
       </div>
       <label>Access until / renews<input type="date" name="subRenews" value="${m.subRenews ? ymd(new Date(m.subRenews)) : ''}"></label>
+      <div class="row2"><label>Daily calorie target<input type="number" name="calorieTarget" min="800" max="8000" value="${d.targets.kcal || ''}" placeholder="e.g. 2200"></label>
+        <label>Daily protein target (g)<input type="number" name="proteinTarget" min="20" max="500" value="${d.targets.protein || ''}" placeholder="e.g. 140"></label></div>
       <label>Coach notes (private)<textarea name="adminNotes" rows="3" placeholder="Goals, race date, injuries, preferences…">${esc(m.adminNotes)}</textarea></label>
       <button class="btn primary sm" type="submit">Save member</button>
     </form>
@@ -159,8 +162,20 @@ actions.openMember = async (el) => {
       <section class="card"><h3 style="margin-bottom:6px">Feedback</h3>${d.feedback.length ? d.feedback.map(fbHTML).join('') : '<p class="muted small">No voice notes yet.</p>'}</section>
       <div class="stack">
         <section class="card mini"><h3 style="margin-bottom:6px">Recent sessions</h3>${d.completions.length ? d.completions.slice(0, 10).map((c) => `<div class="row"><span>${fmtDate(c.date, { weekday: 'short', day: 'numeric', month: 'short' })} · ${esc(c.title || '')}</span><span class="muted">${c.rpe ? `RPE ${c.rpe}` : ''}${c.durationMin ? ` · ${c.durationMin}m` : ''}</span></div>`).join('') : '<p class="muted small">None yet.</p>'}</section>
+        <section class="card mini"><h3 style="margin-bottom:6px">Strength blocks</h3>${d.strength.length ? d.strength.map((x) => `
+          <div style="padding:8px 0;border-bottom:1px solid var(--line)"><div style="display:flex;justify-content:space-between"><strong>${esc(x.lift)}</strong>
+            <span class="muted small">${x.next ? `Week ${x.next.week}: ${x.next.sets} × ${x.next.reps}${x.next.target != null ? ` @ ${kg(x.next.target)}` : ''}` : 'Block finished'}</span></div>
+            <div class="small muted" style="margin-top:4px">${x.logs.map((l) => `W${l.week} ${l.sets}×${l.reps} @ ${kg(l.weight)}`).join(' · ')}</div></div>`).join('') : '<p class="muted small">No lifts logged.</p>'}</section>
+        ${d.nutrition.enabled || d.nutrition.recent.length ? `<section class="card mini"><h3 style="margin-bottom:6px">Nutrition</h3>
+          <div class="row"><span>Avg calories (days logged, last 7)</span><strong>${d.nutrition.avgKcal7 ? `${d.nutrition.avgKcal7.toLocaleString()} kcal` : '—'}${d.targets.kcal ? ` <span class="muted small">/ ${d.targets.kcal.toLocaleString()}</span>` : ''}</strong></div>
+          <div class="row"><span>Days logged (last 7)</span><strong>${d.nutrition.daysLogged7}/7</strong></div>
+          ${d.nutrition.recent.map((l) => `<div class="row" style="align-items:center">
+            <span style="display:flex;gap:10px;align-items:center;min-width:0">${l.photoUrl ? `<img src="${l.photoUrl}" alt="" style="width:34px;height:34px;border-radius:8px;object-fit:cover">` : ''}
+            <span style="min-width:0"><span class="small muted">${fmtDate(l.date, { weekday: 'short', day: 'numeric', month: 'short' })} · ${esc(l.meal)}</span><br>${esc(l.items.map((i) => i.name).join(', '))}</span></span>
+            <strong style="white-space:nowrap">${l.totals.kcal.toLocaleString()} kcal</strong></div>`).join('')}
+          ${d.nutrition.enabled ? '' : '<p class="muted small">Not on a nutrition plan.</p>'}</section>` : ''}
         <section class="card mini"><h3 style="margin-bottom:6px">PBs</h3>${d.pbs.length ? d.pbs.map((p) => `<div class="row"><span>${esc(p.name)}</span><strong>${fmtVal(p.unit, p.best.value)}</strong></div>`).join('') : '<p class="muted small">No efforts logged.</p>'}</section>
-        <section class="card mini"><h3 style="margin-bottom:6px">Payments</h3>${d.payments.length ? d.payments.map((p) => `<div class="row"><span>${fmtDate(p.createdAt)} · ${esc(PLAN_NAMES[p.plan] || p.plan)}</span><span>${p.status === 'paid' ? '' : '<span class="chip bad">failed</span> '}${money(p.amount, p.currency)}</span></div>`).join('') : '<p class="muted small">No payments.</p>'}</section>
+        <section class="card mini"><h3 style="margin-bottom:6px">Payments</h3>${d.payments.length ? d.payments.map((p) => `<div class="row"><span>${fmtDate(p.createdAt)} · ${esc(planName(p.plan))}</span><span>${p.status === 'paid' ? '' : '<span class="chip bad">failed</span> '}${money(p.amount, p.currency)}</span></div>`).join('') : '<p class="muted small">No payments.</p>'}</section>
       </div>
     </div>`);
 };
@@ -175,12 +190,17 @@ forms.saveMember = async (f) => {
 };
 
 // ---------- Programming ----------
+const progTabs = () => `<div class="seg" style="margin-bottom:18px">${[['week', 'Weekly sessions'], ['strength', 'Strength blocks']].map(([k, l]) => `<button class="${S.progTab === k ? 'on' : ''}" data-act="progTab" data-t="${k}">${l}</button>`).join('')}</div>`;
+actions.progTab = (el) => { S.progTab = el.dataset.t; show(); };
+async function loadPrograms() { const r = await api('/api/admin/programs'); S.programs = r.programs; S.standardWeeks = r.standardWeeks; }
 async function viewProgramming(v) {
-  const d = await api(`/api/admin/workouts${S.weekStart ? `?start=${S.weekStart}` : ''}`);
+  if (S.progTab === 'strength') return viewStrength(v);
+  const [d] = await Promise.all([api(`/api/admin/workouts${S.weekStart ? `?start=${S.weekStart}` : ''}`), loadPrograms()]);
   S.weekStart = d.start; S.week = d;
   const days = [0, 1, 2, 3, 4].map((i) => addDays(d.start, i));
   v.innerHTML = `<div class="page-head"><div><div class="eyebrow">Monday – Friday</div><h1>Programming</h1></div>
       <div class="btn-row"><button class="btn sm" data-act="copyWeek">Copy week → next week</button><button class="btn sm primary" data-act="fillTemplate">Fill empty days from HYROX template</button></div></div>
+    ${progTabs()}
     <div class="weekbar" style="max-width:420px;margin:0 auto 18px"><button class="icon-btn" data-act="pWeek" data-d="-7">‹</button>
       <div><div class="eyebrow">${d.start <= d.today && d.today <= addDays(d.start, 6) ? 'This week' : 'Week of'}</div><strong>${fmtDate(d.start)} – ${fmtDate(addDays(d.start, 4))}</strong></div>
       <button class="icon-btn" data-act="pWeek" data-d="7">›</button></div>
@@ -190,6 +210,7 @@ async function viewProgramming(v) {
         ${ws.map((w) => `<button class="wcard ${w.published ? '' : 'draft'}" data-act="editWorkout" data-id="${w.id}">
           ${w.focus ? `<span class="chip accent" style="align-self:flex-start">${esc(w.focus)}</span>` : ''}<h3>${esc(w.title)}</h3>
           <div class="small muted">${w.duration ? `${w.duration} min · ` : ''}${w.blocks.map((b) => esc(b.title)).join(' · ')}</div>
+          ${w.blocks.filter((b) => b.programId).map((b) => { const p = S.programs.find((x) => x.id === b.programId); return p ? `<span class="chip" style="align-self:flex-start">↗ ${esc(p.lift)} · wk ${Math.max(1, Math.round((parseYmd(w.date) - parseYmd(p.startDate)) / 6048e5) + 1)}</span>` : ''; }).join('')}
           <div class="meta"><span>${w.published ? '● Published' : '○ Draft'}</span><span>✓ ${w.completions}</span><span>🎙 ${w.voiceNotes}</span></div></button>`).join('')}
         ${ws.length ? '' : `<button class="wcard new" data-act="newWorkout" data-date="${day}">+ Create workout</button>`}</div>`;
     }).join('')}</div>`;
@@ -235,7 +256,8 @@ function openEditor(w) {
         <button type="button" data-act="moveBlock" data-i="${i}" data-d="-1" title="Move up">↑</button><button type="button" data-act="moveBlock" data-i="${i}" data-d="1" title="Move down">↓</button><button type="button" data-act="removeBlock" data-i="${i}" title="Remove">×</button></div></div>
       <div class="row2"><label>Title<input data-k="title" value="${esc(b.title)}"></label><label>Format / scheme<input data-k="format" value="${esc(b.format)}" placeholder="e.g. 4 rounds for time"></label></div>
       <label>Details (one movement per line)<textarea data-k="details" rows="4">${esc(b.details)}</textarea></label>
-      <label>Track as PB effort<select data-k="pbEvent">${evOpts(b.pbEvent)}</select></label></div>`).join('')}</div>
+      <div class="row2"><label>Strength progression<select data-k="programId"><option value="">— none —</option>${S.programs.map((p) => `<option value="${p.id}" ${b.programId === p.id ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></label>
+      <label>Track as PB effort<select data-k="pbEvent">${evOpts(b.pbEvent)}</select></label></div></div>`).join('')}</div>
     <div class="modal-foot">${w.id ? '<button class="btn danger" type="button" data-act="deleteWorkout">Delete</button>' : '<span></span>'}
       <div class="btn-row"><button class="btn ghost" type="button" data-act="close">Cancel</button><button class="btn primary" type="submit">Save workout</button></div></div>
   </form>`);
@@ -279,6 +301,94 @@ actions.deleteWorkout = async () => {
   closeModal(); toast('Workout deleted'); show();
 };
 
+// ---------- Strength blocks ----------
+async function viewStrength(v) {
+  await loadPrograms();
+  v.innerHTML = `<div class="page-head"><div><div class="eyebrow">Percentage progressions</div><h1>Programming</h1></div>
+      <button class="btn sm primary" data-act="newProgram">+ New strength block</button></div>
+    ${progTabs()}
+    <p class="muted" style="margin:-6px 0 18px;max-width:720px">Set sets, reps and a % change for each week. Each athlete's weight is calculated from what they logged the week before —
+      e.g. last week 8 × 100 kg, this week “6 reps, +20%” → 6 × 120 kg. Link a block to a session block in <b>Weekly sessions</b>.</p>
+    ${S.programs.length ? `<div class="stack">${S.programs.map((p) => `
+      <section class="card">
+        <div class="section-title"><div><h3>${esc(p.name)}</h3><div class="small muted" style="margin-top:4px">${esc(p.lift)} · starts ${fmtDate(p.startDate, { day: 'numeric', month: 'short', year: 'numeric' })} ·
+          ${p.currentWeek < 1 ? 'not started' : p.currentWeek > p.weeks.length ? 'finished' : `now in week ${p.currentWeek}`} · ${p.athletes} athlete${p.athletes === 1 ? '' : 's'} logging · linked to ${p.sessions} session${p.sessions === 1 ? '' : 's'}</div></div>
+          <button class="btn sm" data-act="editProgram" data-id="${p.id}">Edit</button></div>
+        <div class="table-wrap" style="box-shadow:none"><table class="prog-table">
+          <tr><th style="text-align:left">Week</th>${p.weeks.map((_, i) => `<th class="${i + 1 === p.currentWeek ? 'cur' : ''}">${i + 1}</th>`).join('')}</tr>
+          <tr><td style="text-align:left" class="muted">Sets × reps</td>${p.weeks.map((w, i) => `<td class="${i + 1 === p.currentWeek ? 'cur' : ''}">${w.sets}×${w.reps}</td>`).join('')}</tr>
+          <tr><td style="text-align:left" class="muted">Change</td>${p.weeks.map((w, i) => `<td class="${i + 1 === p.currentWeek ? 'cur' : w.pct > 0 ? 'pct-up' : w.pct < 0 ? 'pct-down' : ''}">${w.pct > 0 ? '+' : ''}${w.pct}%</td>`).join('')}</tr>
+          <tr><td style="text-align:left" class="muted">From 100 kg</td>${previewWeights(p.weeks, 100, p.roundTo).map((x, i) => `<td class="${i + 1 === p.currentWeek ? 'cur' : 'muted'}">${x}</td>`).join('')}</tr>
+        </table></div>
+      </section>`).join('')}</div>` : '<div class="empty card">No strength blocks yet. Create one to start percentage-based progressions.</div>'}`;
+}
+function previewWeights(weeks, start, step = 2.5) {
+  let w = start;
+  return weeks.map((x, i) => { if (i > 0) w *= 1 + (Number(x.pct) || 0) / 100; return +(Math.round(w / step) * step).toFixed(2); });
+}
+actions.newProgram = () => openProgram({ name: '', lift: '', startDate: addDays(ymd(new Date()), (8 - new Date().getDay()) % 7 || 7), roundTo: 2.5,
+  weeks: S.standardWeeks.map((w) => ({ ...w })) });
+actions.editProgram = (el) => openProgram(structuredClone(S.programs.find((p) => p.id === el.dataset.id)));
+function openProgram(p) {
+  S.prog = p;
+  openModal(`<form class="form" data-form="saveProgram">
+    <div class="modal-head"><div><div class="eyebrow">${p.id ? 'Edit strength block' : 'New strength block'}</div><h2>${esc(p.name || 'Strength block')}</h2></div><button class="icon-btn" type="button" data-act="close">×</button></div>
+    <div class="row2"><label>Block name<input name="name" required value="${esc(p.name)}" placeholder="e.g. Back Squat — 12-week block"></label>
+      <label>Lift<input name="lift" required value="${esc(p.lift)}" placeholder="e.g. Back Squat"></label></div>
+    <div class="row2"><label>Week 1 starts (Monday)<input type="date" name="startDate" required value="${p.startDate}"></label>
+      <label>Round weights to<select name="roundTo">${[1, 1.25, 2, 2.5, 5].map((r) => `<option value="${r}" ${Number(p.roundTo) === r ? 'selected' : ''}>${r} kg</option>`).join('')}</select></label></div>
+    <div class="section-title" style="margin-top:4px"><h3>Weeks</h3><div class="btn-row">
+      <button class="btn sm ghost" type="button" data-act="progStandard">Load standard 12 weeks</button>
+      <button class="btn sm" type="button" data-act="progWeek" data-d="-1">− Week</button><button class="btn sm" type="button" data-act="progWeek" data-d="1">+ Week</button></div></div>
+    <p class="small muted" style="margin:0 0 8px">% change is applied to the weight the athlete logged the week before. Use a negative % for a deload. Week 1 is their starting weight.</p>
+    <div class="table-wrap" style="box-shadow:none"><table class="prog-table prog-ed">
+      <tr><th>Week</th><th>Sets</th><th>Reps</th><th>% change</th><th>e.g. from 100 kg</th></tr>
+      ${p.weeks.map((w, i) => `<tr data-i="${i}"><td><b>${i + 1}</b></td>
+        <td><input type="number" data-k="sets" min="1" max="20" value="${w.sets}"></td>
+        <td><input type="number" data-k="reps" min="1" max="50" value="${w.reps}"></td>
+        <td><input type="number" data-k="pct" step="0.5" min="-50" max="100" value="${w.pct}" ${i === 0 ? 'title="Week 1 is the starting weight"' : ''}></td>
+        <td class="pv" data-pv="${i}"></td></tr>`).join('')}
+    </table></div>
+    <div class="modal-foot">${p.id ? '<button class="btn danger" type="button" data-act="deleteProgram">Delete block</button>' : '<span></span>'}
+      <div class="btn-row"><button class="btn ghost" type="button" data-act="close">Cancel</button><button class="btn primary" type="submit">Save block</button></div></div>
+  </form>`);
+  const f = $('[data-form=saveProgram]');
+  f.addEventListener('input', progPreview);
+  progPreview();
+}
+function syncProgram() {
+  const f = $('[data-form=saveProgram]');
+  if (!f) return;
+  const e = f.elements;
+  Object.assign(S.prog, { name: e.name.value, lift: e.lift.value, startDate: e.startDate.value, roundTo: Number(e.roundTo.value) });
+  S.prog.weeks = $$('tr[data-i]', f).map((tr) => Object.fromEntries($$('[data-k]', tr).map((i) => [i.dataset.k, Number(i.value)])));
+}
+function progPreview() {
+  syncProgram();
+  const xs = previewWeights(S.prog.weeks, 100, S.prog.roundTo);
+  xs.forEach((x, i) => { const td = $(`[data-pv="${i}"]`); if (td) td.textContent = `${S.prog.weeks[i].sets} × ${S.prog.weeks[i].reps} @ ${kg(x)}`; });
+}
+actions.progStandard = () => { syncProgram(); S.prog.weeks = S.standardWeeks.map((w) => ({ ...w })); openProgram(S.prog); };
+actions.progWeek = (el) => {
+  syncProgram();
+  const w = S.prog.weeks;
+  if (Number(el.dataset.d) > 0 && w.length < 16) w.push({ ...(w[w.length - 1] || { sets: 3, reps: 5 }), pct: 2.5 });
+  if (Number(el.dataset.d) < 0 && w.length > 1) w.pop();
+  openProgram(S.prog);
+};
+forms.saveProgram = async () => {
+  syncProgram();
+  const p = S.prog;
+  if (p.id) await api(`/api/admin/programs/${p.id}`, { method: 'PUT', body: p });
+  else await api('/api/admin/programs', { method: 'POST', body: p });
+  closeModal(); toast('Strength block saved'); show();
+};
+actions.deleteProgram = async () => {
+  if (!confirm('Delete this strength block? Athletes\' logged lifts for it are removed and it is unlinked from sessions.')) return;
+  await api(`/api/admin/programs/${S.prog.id}`, { method: 'DELETE' });
+  closeModal(); toast('Strength block deleted'); show();
+};
+
 // ---------- Payments ----------
 async function viewPayments(v) {
   const d = await api('/api/admin/payments');
@@ -287,7 +397,7 @@ async function viewPayments(v) {
     ${S.me.stripe ? '' : '<div class="banner warn">Demo mode — add STRIPE_SECRET_KEY to take real payments (Apple Pay, Google Pay & cards via Stripe Checkout).</div>'}
     <div class="table-wrap"><table class="data"><thead><tr><th>Date</th><th>Member</th><th>Plan</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead><tbody>
     ${d.payments.length ? d.payments.map((p) => `<tr data-act="openMember" data-id="${p.userId}"><td>${fmtDate(p.createdAt, { day: 'numeric', month: 'short', year: 'numeric' })}</td><td>${esc(p.userName)}</td>
-      <td>${esc(PLAN_NAMES[p.plan] || p.plan)}</td><td>${money(p.amount, p.currency)}</td><td class="sub">${esc(p.source)}</td>
+      <td>${esc(planName(p.plan))}</td><td>${money(p.amount, p.currency)}</td><td class="sub">${esc(p.source)}</td>
       <td>${p.status === 'paid' ? '<span class="chip good">Paid</span>' : '<span class="chip bad">Failed</span>'}</td></tr>`).join('')
       : '<tr><td colspan="6" class="center muted" style="padding:28px">No payments yet.</td></tr>'}</tbody></table></div>`;
 }

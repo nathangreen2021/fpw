@@ -7,15 +7,17 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-import { load, save, db, id, AUDIO_DIR } from './lib/db.js';
+import { load, save, db, id, AUDIO_DIR, FOOD_DIR } from './lib/db.js';
 import { today, addDays, mondayYmd, isYmd } from './lib/dates.js';
 import { PB_EVENTS, bestOf, isBetter } from './lib/events.js';
 import { seedIfEmpty, weekTemplate } from './lib/seed.js';
 import { createSession, destroySession, requireUser, requireAdmin, requireActive, isActive,
-  checkAdminPassword, adminPasswordConfigured, loginLimiter } from './lib/auth.js';
+  checkAdminPassword, adminPasswordConfigured, loginLimiter, sessionUser, isAdminReq } from './lib/auth.js';
 import { runMissedCheck, missedStreak, raiseAlert, resolveAlerts } from './lib/alerts.js';
 import { summarise, transcribe } from './lib/summarize.js';
 import * as billing from './lib/billing.js';
+import { prescription, weekOf, sanitizeProgram, STANDARD_WEEKS } from './lib/strength.js';
+import * as food from './lib/nutrition.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const APP_NAME = process.env.APP_NAME || 'FPW';
@@ -47,13 +49,16 @@ const originOf = (req) => process.env.PUBLIC_URL?.replace(/\/$/, '') || `${req.p
 const byDate = (a, b) => a.date.localeCompare(b.date);
 const clampNum = (v, min, max) => { const n = Number(v); return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : null; };
 const pubUser = (u) => ({ id: u.id, name: u.name, email: u.email, plan: u.plan, subStatus: u.subStatus, subRenews: u.subRenews,
-  active: isActive(u), createdAt: u.createdAt, hasBilling: Boolean(u.stripeCustomerId), raceName: u.raceName || '', raceDate: u.raceDate || null });
+  active: isActive(u), createdAt: u.createdAt, hasBilling: Boolean(u.stripeCustomerId), raceName: u.raceName || '', raceDate: u.raceDate || null,
+  planLabel: billing.planLabel(u.plan), nutrition: billing.hasNutrition(u),
+  calorieTarget: u.calorieTarget || null, proteinTarget: u.proteinTarget || null });
+const targetNum = (v, min, max) => (v === null || v === '' ? null : Number.isFinite(Number(v)) ? Math.min(max, Math.max(min, Math.round(Number(v)))) : undefined);
 const displayName = (u) => { const [f, ...r] = (u?.name || 'Athlete').split(' '); return r.length ? `${f} ${r[r.length - 1][0]}.` : f; };
 
 // ---------- Public ----------
 app.get('/api/config', (req, res) =>
   res.json({ appName: APP_NAME, appFullName: APP_FULL_NAME, stripe: Boolean(billing.stripe), plans: billing.publicPlans(), pbEvents: PB_EVENTS,
-    demoHints: process.env.SEED_DEMO !== 'false' && process.env.NODE_ENV !== 'production' }));
+    demoHints: process.env.SEED_DEMO !== 'false' && process.env.NODE_ENV !== 'production', aiFood: food.aiEnabled() }));
 
 app.post('/api/auth/register', loginLimiter, wrap(async (req, res) => {
   const name = String(req.body?.name || '').trim().slice(0, 80);
@@ -89,6 +94,10 @@ app.patch('/api/me', requireUser, (req, res) => {
   if (typeof b.raceName === 'string') req.user.raceName = b.raceName.trim().slice(0, 80);
   if (b.raceDate === null || b.raceDate === '') req.user.raceDate = null;
   else if (isYmd(b.raceDate)) req.user.raceDate = b.raceDate;
+  for (const [k, min, max] of [['calorieTarget', 800, 8000], ['proteinTarget', 20, 500]]) {
+    const v = targetNum(b[k], min, max);
+    if (k in b && v !== undefined) req.user[k] = v;
+  }
   save();
   res.json({ user: pubUser(req.user) });
 });
@@ -128,6 +137,9 @@ app.get('/api/week', requireUser, requireActive, (req, res) => {
   const uid = req.user.id;
   const workouts = s.workouts.filter((w) => w.published && w.date >= start && w.date <= end).sort(byDate).map((w) => ({
     ...w,
+    blocks: w.blocks.map((b) => (b.programId
+      ? { ...b, strength: prescription(s.programs.find((p) => p.id === b.programId), s.liftLogs, uid, w.date) }
+      : b)),
     completion: s.completions.find((c) => c.userId === uid && c.workoutId === w.id) || null,
     voiceNotes: s.voiceNotes.filter((v) => v.userId === uid && v.workoutId === w.id)
       .map((v) => ({ id: v.id, transcript: v.transcript, hasAudio: Boolean(v.audioFile), createdAt: v.createdAt })),
@@ -188,6 +200,97 @@ app.post('/api/workouts/:id/voice', requireUser, requireActive, upload.single('a
   save();
   res.json({ voiceNote: { id: v.id, transcript, hasAudio: Boolean(v.audioFile), createdAt: v.createdAt } });
 }));
+
+// ---------- Athlete: strength progression ----------
+app.post('/api/lifts', requireUser, requireActive, (req, res) => {
+  const s = db();
+  const w = getWorkout(req.body?.workoutId);
+  const prog = s.programs.find((p) => p.id === req.body?.programId);
+  if (!w || !prog || !w.blocks.some((b) => b.programId === prog.id)) return res.status(404).json({ error: 'Strength block not found.' });
+  if (w.date > today()) return res.status(400).json({ error: 'You can log this on the day of the session.' });
+  const week = weekOf(prog, w.date);
+  if (week < 1 || week > prog.weeks.length) return res.status(400).json({ error: 'This session is outside the strength block.' });
+  const weight = clampNum(req.body?.weight, 0.5, 1000);
+  const reps = clampNum(req.body?.reps, 1, 100);
+  const sets = clampNum(req.body?.sets, 1, 30);
+  if (!weight || !reps || !sets) return res.status(400).json({ error: 'Enter sets, reps and weight.' });
+  let log = s.liftLogs.find((l) => l.userId === req.user.id && l.programId === prog.id && l.week === week);
+  if (!log) { log = { id: id(), userId: req.user.id, programId: prog.id, week }; s.liftLogs.push(log); }
+  Object.assign(log, { workoutId: w.id, date: w.date, sets: Math.round(sets), reps: Math.round(reps), weight: +weight.toFixed(2), loggedAt: new Date().toISOString() });
+  save();
+  const next = week < prog.weeks.length ? prescription(prog, s.liftLogs, req.user.id, addDays(w.date, 7)) : null;
+  res.json({ strength: prescription(prog, s.liftLogs, req.user.id, w.date), next });
+});
+
+// ---------- Athlete: nutrition (Fitness + Nutrition plan) ----------
+function requireNutrition(req, res, next) {
+  if (!billing.hasNutrition(req.user)) return res.status(402).json({ error: 'Nutrition is part of the Fitness + Nutrition plan.', needsNutrition: true });
+  next();
+}
+const MEALS = ['breakfast', 'lunch', 'dinner', 'snack'];
+const photoUrl = (f) => (f ? `/api/nutrition/photo/${f}` : null);
+const pubFood = (l) => ({ id: l.id, date: l.date, meal: l.meal, description: l.description, source: l.source, items: l.items,
+  totals: l.totals, photoUrl: photoUrl(l.photo), createdAt: l.createdAt });
+const foodUpload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 12 * 1024 * 1024 },
+  fileFilter: (req, f, cb) => cb(null, /^image\//.test(f.mimetype)) });
+
+app.get('/api/nutrition', requireUser, requireActive, requireNutrition, (req, res) => {
+  const date = isYmd(req.query.date) ? req.query.date : today();
+  const mine = db().foodLogs.filter((l) => l.userId === req.user.id);
+  const logs = mine.filter((l) => l.date === date).sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+  const week = Array.from({ length: 7 }, (_, i) => {
+    const d = addDays(date, i - 6);
+    return { date: d, kcal: mine.filter((l) => l.date === d).reduce((a, l) => a + l.totals.kcal, 0) };
+  });
+  res.json({ date, today: today(), meals: MEALS, target: { kcal: req.user.calorieTarget || null, protein: req.user.proteinTarget || null },
+    logs: logs.map(pubFood), totals: food.totals(logs.map((l) => ({ ...l.totals }))), week, ai: food.aiEnabled() });
+});
+
+app.post('/api/nutrition/estimate', requireUser, requireActive, requireNutrition, foodUpload.single('photo'), wrap(async (req, res) => {
+  const text = String(req.body?.text || '').slice(0, 2000);
+  if (!text.trim() && !req.file) return res.status(400).json({ error: 'Add a photo or describe what you ate.' });
+  const est = await food.estimate({ text, image: req.file?.buffer, mime: req.file?.mimetype });
+  let photo = null;
+  if (req.file) {
+    photo = `${req.user.id}_${id()}.jpg`;
+    fs.writeFileSync(path.join(FOOD_DIR, photo), req.file.buffer);
+  }
+  res.json({ ...est, totals: food.totals(est.items), photo, mealGuess: food.guessMeal(text) });
+}));
+
+app.post('/api/nutrition/logs', requireUser, requireActive, requireNutrition, (req, res) => {
+  const b = req.body || {};
+  const items = food.sanitizeItems(b.items);
+  if (!items.length) return res.status(400).json({ error: 'Add at least one food.' });
+  const photo = typeof b.photo === 'string' && b.photo.startsWith(`${req.user.id}_`) && fs.existsSync(path.join(FOOD_DIR, path.basename(b.photo)))
+    ? path.basename(b.photo) : null;
+  const log = { id: id(), userId: req.user.id, date: isYmd(b.date) ? b.date : today(), meal: MEALS.includes(b.meal) ? b.meal : 'snack',
+    description: String(b.description || '').slice(0, 1000), source: ['photo', 'voice', 'text'].includes(b.source) ? b.source : 'text',
+    items, totals: food.totals(items), photo, createdAt: new Date().toISOString() };
+  db().foodLogs.push(log);
+  save();
+  res.json({ log: pubFood(log) });
+});
+
+app.delete('/api/nutrition/logs/:id', requireUser, (req, res) => {
+  const s = db();
+  const log = s.foodLogs.find((l) => l.id === req.params.id && l.userId === req.user.id);
+  if (!log) return res.status(404).json({ error: 'Entry not found.' });
+  s.foodLogs = s.foodLogs.filter((l) => l !== log);
+  if (log.photo) fs.rm(path.join(FOOD_DIR, log.photo), { force: true }, () => {});
+  save();
+  res.json({ ok: true });
+});
+
+// Food photos: visible to the athlete who took them and to the coach
+app.get('/api/nutrition/photo/:file', (req, res) => {
+  const file = path.basename(req.params.file);
+  const u = sessionUser(req);
+  if (!isAdminReq(req) && !(u && file.startsWith(`${u.id}_`))) return res.status(401).end();
+  const f = path.join(FOOD_DIR, file);
+  if (!fs.existsSync(f)) return res.status(404).end();
+  res.set('Cache-Control', 'private, max-age=86400').sendFile(f);
+});
 
 // ---------- Athlete: PBs + leaderboards ----------
 app.get('/api/pbs', requireUser, (req, res) => {
@@ -303,6 +406,7 @@ function memberRow(u) {
     latestFeedback: notes[0]?.summary?.headline || null,
     ltv: s.payments.filter((p) => p.userId === u.id && p.status === 'paid').reduce((a, p) => a + p.amount, 0),
     openAlerts: s.alerts.filter((a) => a.userId === u.id && !a.resolved).length,
+    nutrition: billing.hasNutrition(u),
   };
 }
 
@@ -369,6 +473,21 @@ app.get('/api/admin/members/:id', requireAdmin, (req, res) => {
     pbs: Object.keys(PB_EVENTS).map((k) => ({ key: k, ...PB_EVENTS[k], best: bestOf(mine, k) })).filter((p) => p.best),
     payments: s.payments.filter((p) => p.userId === u.id).sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
     alerts: s.alerts.filter((a) => a.userId === u.id).sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    targets: { kcal: u.calorieTarget || null, protein: u.proteinTarget || null },
+    strength: s.programs.map((p) => {
+      const logs = s.liftLogs.filter((l) => l.userId === u.id && l.programId === p.id).sort((a, b) => a.week - b.week);
+      return logs.length ? { programId: p.id, name: p.name, lift: p.lift, totalWeeks: p.weeks.length,
+        logs: logs.map((l) => ({ week: l.week, sets: l.sets, reps: l.reps, weight: l.weight, date: l.date })),
+        next: prescription(p, s.liftLogs, u.id, today()) } : null;
+    }).filter(Boolean),
+    nutrition: (() => {
+      const mine = s.foodLogs.filter((l) => l.userId === u.id);
+      const days = Array.from({ length: 7 }, (_, i) => addDays(today(), -i));
+      const perDay = days.map((d) => mine.filter((l) => l.date === d).reduce((a, l) => a + l.totals.kcal, 0)).filter((k) => k > 0);
+      return { enabled: billing.hasNutrition(u), daysLogged7: perDay.length,
+        avgKcal7: perDay.length ? Math.round(perDay.reduce((a, b) => a + b, 0) / perDay.length) : null,
+        recent: [...mine].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 8).map(pubFood) };
+    })(),
   });
 });
 
@@ -377,6 +496,10 @@ app.patch('/api/admin/members/:id', requireAdmin, (req, res) => {
   if (!u) return res.status(404).json({ error: 'Member not found.' });
   const b = req.body || {};
   if (typeof b.adminNotes === 'string') u.adminNotes = b.adminNotes.slice(0, 5000);
+  for (const [k, min, max] of [['calorieTarget', 800, 8000], ['proteinTarget', 20, 500]]) {
+    const v = targetNum(b[k], min, max);
+    if (k in b && v !== undefined) u[k] = v;
+  }
   if (['active', 'cancelled', 'past_due', 'none', 'paused'].includes(b.subStatus)) u.subStatus = b.subStatus;
   if (b.plan === null || billing.PLANS[b.plan]) u.plan = b.plan;
   if (isYmd(b.subRenews)) u.subRenews = new Date(`${b.subRenews}T23:59:00`).toISOString();
@@ -400,6 +523,7 @@ function sanitizeWorkout(b) {
       format: String(x.format || '').trim().slice(0, 120),
       details: String(x.details || '').slice(0, 3000),
       ...(PB_EVENTS[x.pbEvent] ? { pbEvent: x.pbEvent } : {}),
+      ...(x.programId && db().programs.some((p) => p.id === x.programId) ? { programId: x.programId } : {}),
     })),
   };
 }
@@ -413,6 +537,37 @@ app.get('/api/admin/workouts', requireAdmin, (req, res) => {
       voiceNotes: s.voiceNotes.filter((v) => v.workoutId === w.id).length })) });
 });
 app.get('/api/admin/templates', requireAdmin, (req, res) => res.json({ templates: weekTemplate() }));
+
+// Strength blocks (percentage progressions)
+const programRow = (p) => {
+  const s = db();
+  const logs = s.liftLogs.filter((l) => l.programId === p.id);
+  return { ...p, currentWeek: weekOf(p, today()), athletes: new Set(logs.map((l) => l.userId)).size, logs: logs.length,
+    sessions: s.workouts.filter((w) => w.blocks.some((b) => b.programId === p.id)).length };
+};
+app.get('/api/admin/programs', requireAdmin, (req, res) =>
+  res.json({ programs: db().programs.map(programRow), standardWeeks: STANDARD_WEEKS }));
+app.post('/api/admin/programs', requireAdmin, (req, res) => {
+  const p = { id: id(), ...sanitizeProgram(req.body, mondayYmd), createdAt: new Date().toISOString() };
+  db().programs.push(p);
+  save();
+  res.json({ program: programRow(p) });
+});
+app.put('/api/admin/programs/:id', requireAdmin, (req, res) => {
+  const p = db().programs.find((x) => x.id === req.params.id);
+  if (!p) return res.status(404).json({ error: 'Strength block not found.' });
+  Object.assign(p, sanitizeProgram(req.body, mondayYmd), { updatedAt: new Date().toISOString() });
+  save();
+  res.json({ program: programRow(p) });
+});
+app.delete('/api/admin/programs/:id', requireAdmin, (req, res) => {
+  const s = db();
+  s.programs = s.programs.filter((p) => p.id !== req.params.id);
+  s.liftLogs = s.liftLogs.filter((l) => l.programId !== req.params.id);
+  for (const w of s.workouts) for (const b of w.blocks) if (b.programId === req.params.id) delete b.programId;
+  save();
+  res.json({ ok: true });
+});
 
 app.post('/api/admin/workouts', requireAdmin, (req, res) => {
   const w = { id: id(), ...sanitizeWorkout(req.body), createdAt: new Date().toISOString() };

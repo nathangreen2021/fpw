@@ -1,48 +1,50 @@
 {
   "users": [
     {
-      "id": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "id": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
       "name": "Sarah Mitchell",
       "email": "sarah@demo.app",
-      "passHash": "$2a$08$MUdzRqHA0lxmjIKdvOzVnOBloglbynQTktcK0ZMa9hsdDKno8pQ.W",
+      "passHash": "$2a$08$A/0KyRW6RnQ5uAPB9WgYU.URvMRDam4XDOtcmgKfP/wTlmnKnPhPi",
       "createdAt": "2026-10-17T13:00:00.000Z",
       "subStartedAt": "2026-10-17T13:00:00.000Z",
-      "plan": "monthly",
+      "plan": "monthly_nutrition",
       "subStatus": "active",
-      "subRenews": "2026-11-17T02:59:08.964Z",
+      "subRenews": "2026-11-18T03:33:55.961Z",
       "adminNotes": "",
+      "calorieTarget": 2200,
+      "proteinTarget": 140,
       "raceName": "HYROX Sydney",
-      "raceDate": "2026-12-25"
+      "raceDate": "2026-12-26"
     },
     {
-      "id": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "id": "b57dca47-4583-4db5-97aa-244a7bc262fc",
       "name": "Josh Nguyen",
       "email": "josh@demo.app",
-      "passHash": "$2a$08$MUdzRqHA0lxmjIKdvOzVnOBloglbynQTktcK0ZMa9hsdDKno8pQ.W",
+      "passHash": "$2a$08$A/0KyRW6RnQ5uAPB9WgYU.URvMRDam4XDOtcmgKfP/wTlmnKnPhPi",
       "createdAt": "2026-10-17T13:00:00.000Z",
       "subStartedAt": "2026-10-17T13:00:00.000Z",
       "plan": "weekly",
       "subStatus": "active",
-      "subRenews": "2026-11-03T02:59:08.964Z",
+      "subRenews": "2026-11-04T03:33:55.961Z",
       "adminNotes": ""
     },
     {
-      "id": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "id": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
       "name": "Mia Rossi",
       "email": "mia@demo.app",
-      "passHash": "$2a$08$MUdzRqHA0lxmjIKdvOzVnOBloglbynQTktcK0ZMa9hsdDKno8pQ.W",
+      "passHash": "$2a$08$A/0KyRW6RnQ5uAPB9WgYU.URvMRDam4XDOtcmgKfP/wTlmnKnPhPi",
       "createdAt": "2026-10-17T13:00:00.000Z",
       "subStartedAt": "2026-10-17T13:00:00.000Z",
       "plan": "annual",
       "subStatus": "active",
-      "subRenews": "2027-08-26T02:59:08.964Z",
+      "subRenews": "2027-08-27T03:33:55.961Z",
       "adminNotes": ""
     },
     {
-      "id": "cb7d2d98-4ad1-49c9-856e-264b9b875490",
+      "id": "088f450d-fb7c-42a2-ba2a-f141297311f2",
       "name": "Tom Baker",
       "email": "tom@demo.app",
-      "passHash": "$2a$08$MUdzRqHA0lxmjIKdvOzVnOBloglbynQTktcK0ZMa9hsdDKno8pQ.W",
+      "passHash": "$2a$08$A/0KyRW6RnQ5uAPB9WgYU.URvMRDam4XDOtcmgKfP/wTlmnKnPhPi",
       "createdAt": "2026-10-17T13:00:00.000Z",
       "subStartedAt": null,
       "plan": null,
@@ -53,7 +55,7 @@
   ],
   "workouts": [
     {
-      "id": "03a9eea9-2276-468f-9200-756bbc3f27ba",
+      "id": "65bd9d3a-04b8-4d3d-a7fe-eb52667c3a79",
       "date": "2026-10-19",
       "title": "Compromised Running",
       "focus": "Engine + Strength",
@@ -67,9 +69,9 @@
         },
         {
           "title": "Strength — Back Squat",
-          "format": "5 × 5 @ 75% · rest 2:00",
-          "details": "3 s lowering, drive up hard\nLog a heavy single if you test your 1RM",
-          "pbEvent": "back_squat_1rm"
+          "format": "Rest 2:00 between sets",
+          "details": "3 s lowering, drive up hard\nBuild to your working weight, then hit every set\nLog what you lifted — next week is calculated from it",
+          "programId": "prog_back_squat"
         },
         {
           "title": "Compromised Runs",
@@ -84,10 +86,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "d7e3b3d4-c9f4-4f26-906d-4e5b1832a3b3",
+      "id": "467e96cd-f33a-4fa8-b451-6fd586ca86b6",
       "date": "2026-10-20",
       "title": "Threshold + Sled Work",
       "focus": "Stations",
@@ -118,10 +120,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "7d7ea649-839e-4890-a0fd-918d90d23e6f",
+      "id": "c7bd0f4f-3d93-4d16-b677-f45a8bfe45e8",
       "date": "2026-10-21",
       "title": "Aerobic Base",
       "focus": "Zone 2",
@@ -140,10 +142,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "cd3f8cd8-9205-4247-a2bb-b7034b6b5ddd",
+      "id": "6f5364c3-cffb-4f35-af3c-4fa87a316e1d",
       "date": "2026-10-22",
       "title": "Strength Endurance",
       "focus": "Legs + Lunges",
@@ -157,9 +159,9 @@
         },
         {
           "title": "Strength — Deadlift",
-          "format": "4 × 6 @ 75–80% · rest 2:00",
-          "details": "Brace, push the floor away\nLog a heavy single if you test your 1RM",
-          "pbEvent": "deadlift_1rm"
+          "format": "Rest 2:00 between sets",
+          "details": "Brace, push the floor away\nSame weight across all sets\nLog what you lifted — next week is calculated from it",
+          "programId": "prog_deadlift"
         },
         {
           "title": "Station Grind",
@@ -175,10 +177,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "c355a63f-4c8f-47ff-b352-5d6185b27c59",
+      "id": "0aa5d9cd-ac77-46e5-bbad-403e2ffa5cc4",
       "date": "2026-10-23",
       "title": "Half HYROX Simulation",
       "focus": "Race Practice",
@@ -203,10 +205,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "3d588647-cef2-48b6-8d33-ed64ae9f76f1",
+      "id": "e4ee8ba0-a3fe-4897-8b0f-f6aecda31fbd",
       "date": "2026-10-26",
       "title": "Compromised Running",
       "focus": "Engine + Strength",
@@ -220,9 +222,9 @@
         },
         {
           "title": "Strength — Back Squat",
-          "format": "5 × 5 @ 75% · rest 2:00",
-          "details": "3 s lowering, drive up hard\nLog a heavy single if you test your 1RM",
-          "pbEvent": "back_squat_1rm"
+          "format": "Rest 2:00 between sets",
+          "details": "3 s lowering, drive up hard\nBuild to your working weight, then hit every set\nLog what you lifted — next week is calculated from it",
+          "programId": "prog_back_squat"
         },
         {
           "title": "Compromised Runs",
@@ -237,10 +239,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "83107235-5a44-4b43-b812-cee844d3cf53",
+      "id": "58d1240d-df66-4527-919d-d56909786172",
       "date": "2026-10-27",
       "title": "Threshold + Sled Work",
       "focus": "Stations",
@@ -271,10 +273,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "2e05554e-42bf-47e3-bb48-c92332bb3d55",
+      "id": "10ad2e38-66d7-492e-8a21-014cc268b84d",
       "date": "2026-10-28",
       "title": "Aerobic Base",
       "focus": "Zone 2",
@@ -293,10 +295,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "66d86f42-6c1f-4b18-a54a-9aca3ea2abe3",
+      "id": "165d8310-7acd-42d3-9904-843fd6afe9dd",
       "date": "2026-10-29",
       "title": "Strength Endurance",
       "focus": "Legs + Lunges",
@@ -310,9 +312,9 @@
         },
         {
           "title": "Strength — Deadlift",
-          "format": "4 × 6 @ 75–80% · rest 2:00",
-          "details": "Brace, push the floor away\nLog a heavy single if you test your 1RM",
-          "pbEvent": "deadlift_1rm"
+          "format": "Rest 2:00 between sets",
+          "details": "Brace, push the floor away\nSame weight across all sets\nLog what you lifted — next week is calculated from it",
+          "programId": "prog_deadlift"
         },
         {
           "title": "Station Grind",
@@ -328,10 +330,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "83faf13e-b8a5-4bd2-9021-479445c298b2",
+      "id": "55caf5ca-7607-4c82-8edf-fca4d2701112",
       "date": "2026-10-30",
       "title": "Half HYROX Simulation",
       "focus": "Race Practice",
@@ -356,10 +358,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "53277dfd-8b61-4828-a410-4b9964d40ab7",
+      "id": "0e0f5143-e078-4315-a53c-5417bbfac142",
       "date": "2026-11-02",
       "title": "Compromised Running",
       "focus": "Engine + Strength",
@@ -373,9 +375,9 @@
         },
         {
           "title": "Strength — Back Squat",
-          "format": "5 × 5 @ 75% · rest 2:00",
-          "details": "3 s lowering, drive up hard\nLog a heavy single if you test your 1RM",
-          "pbEvent": "back_squat_1rm"
+          "format": "Rest 2:00 between sets",
+          "details": "3 s lowering, drive up hard\nBuild to your working weight, then hit every set\nLog what you lifted — next week is calculated from it",
+          "programId": "prog_back_squat"
         },
         {
           "title": "Compromised Runs",
@@ -390,10 +392,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "b3a9df3d-e60d-4f87-ad44-9096a6c00e82",
+      "id": "b8fcb800-8a9d-442f-bfd5-d7f90039a0bc",
       "date": "2026-11-03",
       "title": "Threshold + Sled Work",
       "focus": "Stations",
@@ -424,10 +426,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "4c75388e-f115-49cf-87bb-1366b0efbb2b",
+      "id": "01e00a1f-75b1-4b5c-9937-3e8bdf048910",
       "date": "2026-11-04",
       "title": "Aerobic Base",
       "focus": "Zone 2",
@@ -446,10 +448,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "1b0524fb-eaae-4014-9ffc-4e22a8b125b2",
+      "id": "a12c63de-aa60-4a61-a64b-f60651449395",
       "date": "2026-11-05",
       "title": "Strength Endurance",
       "focus": "Legs + Lunges",
@@ -463,9 +465,9 @@
         },
         {
           "title": "Strength — Deadlift",
-          "format": "4 × 6 @ 75–80% · rest 2:00",
-          "details": "Brace, push the floor away\nLog a heavy single if you test your 1RM",
-          "pbEvent": "deadlift_1rm"
+          "format": "Rest 2:00 between sets",
+          "details": "Brace, push the floor away\nSame weight across all sets\nLog what you lifted — next week is calculated from it",
+          "programId": "prog_deadlift"
         },
         {
           "title": "Station Grind",
@@ -481,10 +483,10 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     },
     {
-      "id": "ccdbe5d2-cd4e-4ceb-8a96-3abaa5596ba6",
+      "id": "6b0fbfeb-2223-48d2-96a2-0a77d1d099aa",
       "date": "2026-11-06",
       "title": "Half HYROX Simulation",
       "focus": "Race Practice",
@@ -509,14 +511,14 @@
         }
       ],
       "published": true,
-      "createdAt": "2026-10-30T02:59:08.941Z"
+      "createdAt": "2026-10-31T03:33:55.923Z"
     }
   ],
   "completions": [
     {
-      "id": "b74f53b8-5366-44ec-b4ea-c85c5a98055d",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "workoutId": "03a9eea9-2276-468f-9200-756bbc3f27ba",
+      "id": "a3317836-01d6-4898-b1dd-4ee8a788b522",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "65bd9d3a-04b8-4d3d-a7fe-eb52667c3a79",
       "date": "2026-10-19",
       "rpe": 6,
       "durationMin": 55,
@@ -524,9 +526,9 @@
       "completedAt": "2026-10-19T07:00:00.000Z"
     },
     {
-      "id": "cc90c00e-1d41-491a-889c-99f493bb7f53",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "workoutId": "d7e3b3d4-c9f4-4f26-906d-4e5b1832a3b3",
+      "id": "aa28f0d7-3126-4bc6-bd3f-10bdb627bfcd",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "467e96cd-f33a-4fa8-b451-6fd586ca86b6",
       "date": "2026-10-20",
       "rpe": 7,
       "durationMin": 60,
@@ -534,9 +536,9 @@
       "completedAt": "2026-10-20T07:00:00.000Z"
     },
     {
-      "id": "c1a75f2a-bc81-4147-b66d-00653193977c",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "workoutId": "7d7ea649-839e-4890-a0fd-918d90d23e6f",
+      "id": "050eabc0-c2bd-434c-9350-b81ca30a2de7",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "c7bd0f4f-3d93-4d16-b677-f45a8bfe45e8",
       "date": "2026-10-21",
       "rpe": 8,
       "durationMin": 65,
@@ -544,9 +546,9 @@
       "completedAt": "2026-10-21T07:00:00.000Z"
     },
     {
-      "id": "e1aaa7d7-87af-4c2e-bcc6-d478e74703a8",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "workoutId": "cd3f8cd8-9205-4247-a2bb-b7034b6b5ddd",
+      "id": "f942b227-b549-4f24-b02c-05cf3fe0d168",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "6f5364c3-cffb-4f35-af3c-4fa87a316e1d",
       "date": "2026-10-22",
       "rpe": 6,
       "durationMin": 70,
@@ -554,9 +556,9 @@
       "completedAt": "2026-10-22T07:00:00.000Z"
     },
     {
-      "id": "a526def6-78c3-4495-b0bb-44b23cd69b12",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "workoutId": "c355a63f-4c8f-47ff-b352-5d6185b27c59",
+      "id": "bec2d93f-e5fa-4af6-9d40-07ffe249cb06",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "0aa5d9cd-ac77-46e5-bbad-403e2ffa5cc4",
       "date": "2026-10-23",
       "rpe": 7,
       "durationMin": 55,
@@ -564,9 +566,9 @@
       "completedAt": "2026-10-23T07:00:00.000Z"
     },
     {
-      "id": "b14a136d-34e0-408c-8f16-5867cbdb3cd3",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "workoutId": "3d588647-cef2-48b6-8d33-ed64ae9f76f1",
+      "id": "2468bade-5809-44c3-a610-d91199e9eb5c",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "e4ee8ba0-a3fe-4897-8b0f-f6aecda31fbd",
       "date": "2026-10-26",
       "rpe": 8,
       "durationMin": 60,
@@ -574,9 +576,9 @@
       "completedAt": "2026-10-26T07:00:00.000Z"
     },
     {
-      "id": "9481959e-79c4-49fd-a641-03b7997f3427",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "workoutId": "83107235-5a44-4b43-b812-cee844d3cf53",
+      "id": "2970346e-03b8-4c7a-8078-2fa58321bd4b",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "58d1240d-df66-4527-919d-d56909786172",
       "date": "2026-10-27",
       "rpe": 6,
       "durationMin": 65,
@@ -584,9 +586,9 @@
       "completedAt": "2026-10-27T07:00:00.000Z"
     },
     {
-      "id": "4fc79f8e-e651-49a3-b89d-38d98fa25e86",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "workoutId": "2e05554e-42bf-47e3-bb48-c92332bb3d55",
+      "id": "3cc2a173-426f-4e1c-9a5d-473961715795",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "10ad2e38-66d7-492e-8a21-014cc268b84d",
       "date": "2026-10-28",
       "rpe": 7,
       "durationMin": 70,
@@ -594,9 +596,9 @@
       "completedAt": "2026-10-28T07:00:00.000Z"
     },
     {
-      "id": "27b176b2-d875-491d-bec6-cb025a785096",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "workoutId": "66d86f42-6c1f-4b18-a54a-9aca3ea2abe3",
+      "id": "2684d822-5c25-450a-822c-905c99c5a28a",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "165d8310-7acd-42d3-9904-843fd6afe9dd",
       "date": "2026-10-29",
       "rpe": 8,
       "durationMin": 55,
@@ -604,9 +606,19 @@
       "completedAt": "2026-10-29T07:00:00.000Z"
     },
     {
-      "id": "0bb73a99-47a0-4666-ad9a-e7557ca9bff5",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
-      "workoutId": "03a9eea9-2276-468f-9200-756bbc3f27ba",
+      "id": "720d0112-34d0-4eca-bdcb-481668f91243",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "55caf5ca-7607-4c82-8edf-fca4d2701112",
+      "date": "2026-10-30",
+      "rpe": 6,
+      "durationMin": 60,
+      "notes": "",
+      "completedAt": "2026-10-30T07:00:00.000Z"
+    },
+    {
+      "id": "238343b4-5bb3-48d7-8465-226e14c2268b",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "workoutId": "65bd9d3a-04b8-4d3d-a7fe-eb52667c3a79",
       "date": "2026-10-19",
       "rpe": 7,
       "durationMin": 50,
@@ -614,9 +626,9 @@
       "completedAt": "2026-10-19T07:00:00.000Z"
     },
     {
-      "id": "263716e5-36b5-4f08-b6b3-2277d255d029",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
-      "workoutId": "d7e3b3d4-c9f4-4f26-906d-4e5b1832a3b3",
+      "id": "f5cd1a11-a66b-47ae-b749-b4fc62eb8c3e",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "workoutId": "467e96cd-f33a-4fa8-b451-6fd586ca86b6",
       "date": "2026-10-20",
       "rpe": 7,
       "durationMin": 50,
@@ -624,9 +636,9 @@
       "completedAt": "2026-10-20T07:00:00.000Z"
     },
     {
-      "id": "86f86091-8434-4243-a8c4-aedf1ca8357b",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
-      "workoutId": "7d7ea649-839e-4890-a0fd-918d90d23e6f",
+      "id": "f92e1d08-6146-4808-8df5-626e90851668",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "workoutId": "c7bd0f4f-3d93-4d16-b677-f45a8bfe45e8",
       "date": "2026-10-21",
       "rpe": 7,
       "durationMin": 50,
@@ -634,9 +646,9 @@
       "completedAt": "2026-10-21T07:00:00.000Z"
     },
     {
-      "id": "8bb2ffca-a71a-4fd0-98ac-c356e6331f62",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
-      "workoutId": "cd3f8cd8-9205-4247-a2bb-b7034b6b5ddd",
+      "id": "786f2acd-112b-49c9-a14f-3ada6c5a9b88",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "workoutId": "6f5364c3-cffb-4f35-af3c-4fa87a316e1d",
       "date": "2026-10-22",
       "rpe": 7,
       "durationMin": 50,
@@ -644,9 +656,9 @@
       "completedAt": "2026-10-22T07:00:00.000Z"
     },
     {
-      "id": "35bdde36-5b4b-4e9d-b059-0cec34d0938a",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
-      "workoutId": "c355a63f-4c8f-47ff-b352-5d6185b27c59",
+      "id": "c32eabfc-5d24-4939-b14e-6b65ab85b43e",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "workoutId": "0aa5d9cd-ac77-46e5-bbad-403e2ffa5cc4",
       "date": "2026-10-23",
       "rpe": 7,
       "durationMin": 50,
@@ -654,9 +666,9 @@
       "completedAt": "2026-10-23T07:00:00.000Z"
     },
     {
-      "id": "ebd49bf4-2a8d-496a-972f-f5c92eb4892e",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
-      "workoutId": "3d588647-cef2-48b6-8d33-ed64ae9f76f1",
+      "id": "28d0aed2-6f8b-4ea6-a782-a7aa206fd4c8",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "workoutId": "e4ee8ba0-a3fe-4897-8b0f-f6aecda31fbd",
       "date": "2026-10-26",
       "rpe": 7,
       "durationMin": 50,
@@ -664,9 +676,9 @@
       "completedAt": "2026-10-26T07:00:00.000Z"
     },
     {
-      "id": "7d53e97c-74c7-47b4-8172-871f17deb230",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
-      "workoutId": "83107235-5a44-4b43-b812-cee844d3cf53",
+      "id": "57dae442-60cd-4e26-8b4a-6658b2151b50",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "workoutId": "58d1240d-df66-4527-919d-d56909786172",
       "date": "2026-10-27",
       "rpe": 7,
       "durationMin": 50,
@@ -674,9 +686,19 @@
       "completedAt": "2026-10-27T07:00:00.000Z"
     },
     {
-      "id": "623bd9de-2070-4a58-b07f-27b7938dd1be",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
-      "workoutId": "03a9eea9-2276-468f-9200-756bbc3f27ba",
+      "id": "af01881e-a7c8-4b4f-a0fc-5a80dbdb69e9",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "workoutId": "10ad2e38-66d7-492e-8a21-014cc268b84d",
+      "date": "2026-10-28",
+      "rpe": 7,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-28T07:00:00.000Z"
+    },
+    {
+      "id": "327fd906-60fc-48d1-b8dc-99345bdae5a5",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "workoutId": "65bd9d3a-04b8-4d3d-a7fe-eb52667c3a79",
       "date": "2026-10-19",
       "rpe": 5,
       "durationMin": 50,
@@ -684,9 +706,9 @@
       "completedAt": "2026-10-19T07:00:00.000Z"
     },
     {
-      "id": "f6b8eb06-58d0-4923-a0c5-6b0d795a788d",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
-      "workoutId": "d7e3b3d4-c9f4-4f26-906d-4e5b1832a3b3",
+      "id": "e72b8e69-5533-4d1d-84d6-5a855be5e631",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "workoutId": "467e96cd-f33a-4fa8-b451-6fd586ca86b6",
       "date": "2026-10-20",
       "rpe": 6,
       "durationMin": 50,
@@ -694,9 +716,9 @@
       "completedAt": "2026-10-20T07:00:00.000Z"
     },
     {
-      "id": "f18dedbf-82e5-4fc7-9b67-d319a3b7d5b4",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
-      "workoutId": "cd3f8cd8-9205-4247-a2bb-b7034b6b5ddd",
+      "id": "1e7bcdc3-c507-468c-b5eb-ef2417c593ff",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "workoutId": "6f5364c3-cffb-4f35-af3c-4fa87a316e1d",
       "date": "2026-10-22",
       "rpe": 8,
       "durationMin": 50,
@@ -704,9 +726,9 @@
       "completedAt": "2026-10-22T07:00:00.000Z"
     },
     {
-      "id": "b6153578-caac-4f96-aa6f-f4230807787f",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
-      "workoutId": "c355a63f-4c8f-47ff-b352-5d6185b27c59",
+      "id": "1bcf7583-47e3-416d-9a7c-e32e42acc218",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "workoutId": "0aa5d9cd-ac77-46e5-bbad-403e2ffa5cc4",
       "date": "2026-10-23",
       "rpe": 5,
       "durationMin": 50,
@@ -714,9 +736,9 @@
       "completedAt": "2026-10-23T07:00:00.000Z"
     },
     {
-      "id": "a8bf4710-505b-4633-b1b9-e8335e46728e",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
-      "workoutId": "3d588647-cef2-48b6-8d33-ed64ae9f76f1",
+      "id": "3b1dd9f1-01d3-40d8-920d-390f7902fbb5",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "workoutId": "e4ee8ba0-a3fe-4897-8b0f-f6aecda31fbd",
       "date": "2026-10-26",
       "rpe": 6,
       "durationMin": 50,
@@ -724,9 +746,9 @@
       "completedAt": "2026-10-26T07:00:00.000Z"
     },
     {
-      "id": "96ec452f-b623-4c4f-8e6d-64a9057eacbe",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
-      "workoutId": "83107235-5a44-4b43-b812-cee844d3cf53",
+      "id": "cf99ea2e-bb6f-4372-b206-956f4714c72b",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "workoutId": "58d1240d-df66-4527-919d-d56909786172",
       "date": "2026-10-27",
       "rpe": 7,
       "durationMin": 50,
@@ -734,9 +756,9 @@
       "completedAt": "2026-10-27T07:00:00.000Z"
     },
     {
-      "id": "0ba35f9b-2ce2-440d-8c55-2b70dfbe0a7f",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
-      "workoutId": "2e05554e-42bf-47e3-bb48-c92332bb3d55",
+      "id": "9829ef85-7b66-4b00-bc4c-5b7aef9276b2",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "workoutId": "10ad2e38-66d7-492e-8a21-014cc268b84d",
       "date": "2026-10-28",
       "rpe": 8,
       "durationMin": 50,
@@ -744,21 +766,31 @@
       "completedAt": "2026-10-28T07:00:00.000Z"
     },
     {
-      "id": "df002f4b-8c56-4ea7-94c0-eed6e0f05b75",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
-      "workoutId": "66d86f42-6c1f-4b18-a54a-9aca3ea2abe3",
+      "id": "aff21f3d-deda-432d-9760-4c650a5163e8",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "workoutId": "165d8310-7acd-42d3-9904-843fd6afe9dd",
       "date": "2026-10-29",
       "rpe": 5,
       "durationMin": 50,
       "notes": "",
       "completedAt": "2026-10-29T07:00:00.000Z"
+    },
+    {
+      "id": "808d7fc8-1ca1-4318-b077-6d4729355b4b",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "workoutId": "55caf5ca-7607-4c82-8edf-fca4d2701112",
+      "date": "2026-10-30",
+      "rpe": 6,
+      "durationMin": 50,
+      "notes": "",
+      "completedAt": "2026-10-30T07:00:00.000Z"
     }
   ],
   "voiceNotes": [
     {
-      "id": "f0e2fb45-57c6-4adf-931d-bb16be547515",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "workoutId": "66d86f42-6c1f-4b18-a54a-9aca3ea2abe3",
+      "id": "3edfa131-d435-4d2a-b73e-1919669d33e7",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "workoutId": "55caf5ca-7607-4c82-8edf-fca4d2701112",
       "transcript": "Felt really strong today. Smashed the wall balls unbroken and I think I got a PB on the 1k, legs felt fresh the whole way.",
       "audioFile": null,
       "summary": {
@@ -772,12 +804,12 @@
         "coachAction": "Celebrate the win publicly — great moment to reinforce momentum.",
         "engine": "heuristic"
       },
-      "createdAt": "2026-10-29T08:00:00.000Z"
+      "createdAt": "2026-10-30T08:00:00.000Z"
     },
     {
-      "id": "a868e5a1-2d3f-4430-97ae-befcf25d420a",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
-      "workoutId": "66d86f42-6c1f-4b18-a54a-9aca3ea2abe3",
+      "id": "4e7b26f0-28b9-4c56-96b8-11a07466000c",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "workoutId": "55caf5ca-7607-4c82-8edf-fca4d2701112",
       "transcript": "Struggled a bit today, got a twinge of pain in my left knee on the lunges so I scaled the last round. Not sure if I should run tomorrow.",
       "audioFile": null,
       "summary": {
@@ -791,12 +823,12 @@
         "coachAction": "Check in today about the knee and consider modifying the next session.",
         "engine": "heuristic"
       },
-      "createdAt": "2026-10-29T08:00:00.000Z"
+      "createdAt": "2026-10-30T08:00:00.000Z"
     },
     {
-      "id": "c6245fec-1b5f-46db-8406-dac980b3d42b",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
-      "workoutId": "83107235-5a44-4b43-b812-cee844d3cf53",
+      "id": "e654e8ae-86c7-452d-ba6b-84f8ee2f707d",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "workoutId": "10ad2e38-66d7-492e-8a21-014cc268b84d",
       "transcript": "Pretty tired, work has been super busy and stressful this week. Got through it but the runs felt heavy.",
       "audioFile": null,
       "summary": {
@@ -810,141 +842,141 @@
         "coachAction": "Send an encouraging message and consider scaling the next session.",
         "engine": "heuristic"
       },
-      "createdAt": "2026-10-27T08:00:00.000Z"
+      "createdAt": "2026-10-28T08:00:00.000Z"
     }
   ],
   "results": [
     {
-      "id": "e4323212-c4bd-4f16-9551-2f7f3740c18b",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "id": "72dd8a32-f3de-4f6d-9910-166d4741a47a",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
       "event": "run_1k",
       "value": 220,
       "date": "2026-10-19",
       "createdAt": "2026-10-19T08:00:00.000Z"
     },
     {
-      "id": "0c5355f0-8a1d-468c-bc15-c50ee2e10927",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "id": "0039f2fa-9de0-442a-bf4d-51fa0c32fa6f",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
       "event": "run_1k",
       "value": 205,
       "date": "2026-10-22",
       "createdAt": "2026-10-22T08:00:00.000Z"
     },
     {
-      "id": "ee6b89a0-e821-4c67-939b-a1fa758eefb7",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "id": "9fc04b3a-1ed6-490b-b1fe-f07ca5f1d223",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
       "event": "row_1000",
       "value": 225,
       "date": "2026-10-20",
       "createdAt": "2026-10-20T08:00:00.000Z"
     },
     {
-      "id": "935191f3-c3e6-42ea-92a4-07d18440d214",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "id": "aa0732a1-ffc3-4adf-86ae-dfb807d18231",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
       "event": "ski_1000",
       "value": 245,
       "date": "2026-10-23",
       "createdAt": "2026-10-23T08:00:00.000Z"
     },
     {
-      "id": "f67b005f-a5a6-4989-bf69-c6e0e081c351",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "id": "74228bef-c08a-4a5d-a3c1-fa3afe016522",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
       "event": "half_sim",
       "value": 2300,
       "date": "2026-10-23",
       "createdAt": "2026-10-23T08:00:00.000Z"
     },
     {
-      "id": "fab53bc6-ec46-4f69-9f9e-e5bccdaf2b7a",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "id": "aa982ba5-fafc-4598-b698-4aac1fd0dadd",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
       "event": "back_squat_1rm",
       "value": 85,
       "date": "2026-10-19",
       "createdAt": "2026-10-19T08:00:00.000Z"
     },
     {
-      "id": "3d99aa20-5260-4e3e-a712-cf3d37ccd8de",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
+      "id": "31cef793-c4cd-419c-991b-3228c99982c6",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
       "event": "lunges_100",
       "value": 340,
       "date": "2026-10-22",
       "createdAt": "2026-10-22T08:00:00.000Z"
     },
     {
-      "id": "c8726adc-3f60-456e-8e09-15a4672fa9a2",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "id": "f433247d-4a6e-4798-a586-8530bed1f379",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
       "event": "run_1k",
       "value": 190,
       "date": "2026-10-19",
       "createdAt": "2026-10-19T08:00:00.000Z"
     },
     {
-      "id": "0355a6a9-acb4-4c64-b2eb-f195fc990837",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "id": "04df38a1-a4d7-4254-8c19-d085a4013bd3",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
       "event": "row_1000",
       "value": 210,
       "date": "2026-10-20",
       "createdAt": "2026-10-20T08:00:00.000Z"
     },
     {
-      "id": "d01b859d-eda3-48a2-8b86-e1132da154a7",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "id": "972932b7-feb6-4944-8b57-2c92c6bbee74",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
       "event": "ski_1000",
       "value": 235,
       "date": "2026-10-23",
       "createdAt": "2026-10-23T08:00:00.000Z"
     },
     {
-      "id": "10491960-e582-41e8-8876-23c2df0c96de",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "id": "b53825f1-8851-4f10-8c1a-2effdc483dbd",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
       "event": "half_sim",
       "value": 2145,
       "date": "2026-10-23",
       "createdAt": "2026-10-23T08:00:00.000Z"
     },
     {
-      "id": "d8a21bd5-68c7-41df-8672-f70ff48040b4",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "id": "dc2f767a-29be-497c-9751-d5fb8595895c",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
       "event": "back_squat_1rm",
       "value": 120,
       "date": "2026-10-19",
       "createdAt": "2026-10-19T08:00:00.000Z"
     },
     {
-      "id": "29224067-8ff8-4544-834e-eae9ec6e6f8d",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "id": "ef40ee3f-525b-4e3b-b2cd-9c2c419dd720",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
       "event": "deadlift_1rm",
       "value": 170,
       "date": "2026-10-22",
       "createdAt": "2026-10-22T08:00:00.000Z"
     },
     {
-      "id": "36ddfb67-db33-4570-ab88-d97b65804433",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "id": "597e5afa-f868-4d98-a939-df2f44665607",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
       "event": "run_1k",
       "value": 228,
       "date": "2026-10-22",
       "createdAt": "2026-10-22T08:00:00.000Z"
     },
     {
-      "id": "53e672a0-89b5-4292-a082-3b2a4da85b1a",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "id": "d21360b4-12f8-4bde-868f-e31e20c2f2e1",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
       "event": "row_1000",
       "value": 242,
       "date": "2026-10-20",
       "createdAt": "2026-10-20T08:00:00.000Z"
     },
     {
-      "id": "e41bb84e-e352-4550-b8ab-02035545c38e",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "id": "1b8a0501-e3a8-41ea-a8a5-ba5e4ac5aff6",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
       "event": "ski_1000",
       "value": 260,
       "date": "2026-10-23",
       "createdAt": "2026-10-23T08:00:00.000Z"
     },
     {
-      "id": "1ef656df-3d0c-4d29-ae13-323d5ddbd331",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "id": "57dfb2d5-e3f0-4a75-8490-ba8880793fac",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
       "event": "wall_balls_100",
       "value": 390,
       "date": "2026-10-19",
@@ -953,69 +985,1024 @@
   ],
   "payments": [
     {
-      "id": "503175f1-c856-4d3b-a34d-6c41f5ec440f",
-      "userId": "f557e53b-99e0-47de-9df6-337a6ead29a3",
-      "plan": "monthly",
-      "amount": 9900,
+      "id": "7233eb54-face-4b12-9724-5eae7bc504b8",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "plan": "monthly_nutrition",
+      "amount": 13900,
       "currency": "aud",
       "status": "paid",
       "source": "demo",
       "ref": null,
-      "createdAt": "2026-10-21T02:59:08.973Z"
+      "createdAt": "2026-10-22T03:33:55.975Z"
     },
     {
-      "id": "42f31dfd-d6b2-4d5f-99f2-1a1aedb43c17",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "id": "285880ea-1d7f-4cac-a6b3-4c9ab18788a8",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
       "plan": "weekly",
       "amount": 2900,
       "currency": "aud",
       "status": "paid",
       "source": "demo",
       "ref": null,
-      "createdAt": "2026-10-20T02:59:08.973Z"
+      "createdAt": "2026-10-21T03:33:55.975Z"
     },
     {
-      "id": "e299fe62-aa7f-4996-9d8d-18bfb61244b9",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "id": "e4cfd402-f208-4777-ab21-08b5cb7fa854",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
       "plan": "weekly",
       "amount": 2900,
       "currency": "aud",
       "status": "paid",
       "source": "demo",
       "ref": null,
-      "createdAt": "2026-10-27T02:59:08.973Z"
+      "createdAt": "2026-10-28T03:33:55.975Z"
     },
     {
-      "id": "bd55e06e-231b-445c-acfe-162dd70f8d35",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "id": "493adc52-10d4-463f-a995-9193acd0fcf6",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
       "plan": "annual",
       "amount": 99900,
       "currency": "aud",
       "status": "paid",
       "source": "demo",
       "ref": null,
-      "createdAt": "2026-10-21T02:59:08.973Z"
+      "createdAt": "2026-10-22T03:33:55.975Z"
     }
   ],
   "alerts": [
     {
-      "id": "d3518751-b727-4224-8764-60a365a70e76",
-      "key": "wellbeing:a868e5a1-2d3f-4430-97ae-befcf25d420a",
-      "userId": "89faf360-56bd-44f9-906c-d3501cbc9299",
+      "id": "31e1d3d7-67dc-41cf-8562-5d8e405d9c15",
+      "key": "wellbeing:4e7b26f0-28b9-4c56-96b8-11a07466000c",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
       "type": "wellbeing",
-      "message": "Mia Rossi flagged a possible concern after \"Strength Endurance\": Struggled a bit today, got a twinge of pain in my left knee on the lunges so I scaled t…",
-      "createdAt": "2026-10-30T02:59:08.973Z",
+      "message": "Mia Rossi flagged a possible concern after \"Half HYROX Simulation\": Struggled a bit today, got a twinge of pain in my left knee on the lunges so I scaled t…",
+      "createdAt": "2026-10-31T03:33:55.975Z",
       "resolved": false
     },
     {
-      "id": "76e64b11-82f5-4063-a53a-d639a28039df",
-      "key": "missed:fb97b167-8bdf-4da3-88b5-f0798bc5e002:2e05554e-42bf-47e3-bb48-c92332bb3d55",
-      "userId": "fb97b167-8bdf-4da3-88b5-f0798bc5e002",
+      "id": "38d864fa-8841-4b69-b281-b53c8abde06a",
+      "key": "missed:b57dca47-4583-4db5-97aa-244a7bc262fc:165d8310-7acd-42d3-9904-843fd6afe9dd",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
       "type": "missed",
-      "message": "Josh Nguyen has missed 2 workouts in a row: Strength Endurance (2026-10-29), Aerobic Base (2026-10-28)",
-      "createdAt": "2026-10-30T02:59:08.979Z",
+      "message": "Josh Nguyen has missed 2 workouts in a row: Half HYROX Simulation (2026-10-30), Strength Endurance (2026-10-29)",
+      "createdAt": "2026-10-31T03:33:55.990Z",
       "resolved": false
     }
   ],
-  "sessions": []
+  "sessions": [
+    {
+      "token": "d9ed6bd8955cbbd0b60ffa5b801091e287496262c2412bab8d52788cea2f8059",
+      "role": "user",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "exp": 1796009670123
+    },
+    {
+      "token": "36f32c1e5efbc4ee1aaf5959c6479b8189ff103f0deb7a693e8dd6f94226309e",
+      "role": "admin",
+      "userId": null,
+      "exp": 1793461298730
+    }
+  ],
+  "programs": [
+    {
+      "id": "prog_back_squat",
+      "name": "Back Squat — 12-week block",
+      "lift": "Back Squat",
+      "startDate": "2026-10-19",
+      "roundTo": 2.5,
+      "weeks": [
+        {
+          "sets": 4,
+          "reps": 8,
+          "pct": 0
+        },
+        {
+          "sets": 4,
+          "reps": 8,
+          "pct": 2.5
+        },
+        {
+          "sets": 4,
+          "reps": 6,
+          "pct": 7.5
+        },
+        {
+          "sets": 4,
+          "reps": 6,
+          "pct": 2.5
+        },
+        {
+          "sets": 3,
+          "reps": 8,
+          "pct": -10
+        },
+        {
+          "sets": 5,
+          "reps": 5,
+          "pct": 15
+        },
+        {
+          "sets": 5,
+          "reps": 5,
+          "pct": 2.5
+        },
+        {
+          "sets": 5,
+          "reps": 3,
+          "pct": 7.5
+        },
+        {
+          "sets": 4,
+          "reps": 3,
+          "pct": 2.5
+        },
+        {
+          "sets": 3,
+          "reps": 5,
+          "pct": -10
+        },
+        {
+          "sets": 3,
+          "reps": 3,
+          "pct": 12.5
+        },
+        {
+          "sets": 3,
+          "reps": 1,
+          "pct": 7.5
+        }
+      ],
+      "createdAt": "2026-10-31T03:33:55.922Z"
+    },
+    {
+      "id": "prog_deadlift",
+      "name": "Deadlift — 12-week block",
+      "lift": "Deadlift",
+      "startDate": "2026-10-19",
+      "roundTo": 2.5,
+      "weeks": [
+        {
+          "sets": 4,
+          "reps": 8,
+          "pct": 0
+        },
+        {
+          "sets": 4,
+          "reps": 8,
+          "pct": 2.5
+        },
+        {
+          "sets": 4,
+          "reps": 6,
+          "pct": 7.5
+        },
+        {
+          "sets": 4,
+          "reps": 6,
+          "pct": 2.5
+        },
+        {
+          "sets": 3,
+          "reps": 8,
+          "pct": -10
+        },
+        {
+          "sets": 5,
+          "reps": 5,
+          "pct": 15
+        },
+        {
+          "sets": 5,
+          "reps": 5,
+          "pct": 2.5
+        },
+        {
+          "sets": 5,
+          "reps": 3,
+          "pct": 7.5
+        },
+        {
+          "sets": 4,
+          "reps": 3,
+          "pct": 2.5
+        },
+        {
+          "sets": 3,
+          "reps": 5,
+          "pct": -10
+        },
+        {
+          "sets": 3,
+          "reps": 3,
+          "pct": 12.5
+        },
+        {
+          "sets": 3,
+          "reps": 1,
+          "pct": 7.5
+        }
+      ],
+      "createdAt": "2026-10-31T03:33:55.922Z"
+    }
+  ],
+  "liftLogs": [
+    {
+      "id": "fe33faca-3751-4e1f-a6e6-896d6b9c495e",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "programId": "prog_back_squat",
+      "week": 1,
+      "workoutId": "65bd9d3a-04b8-4d3d-a7fe-eb52667c3a79",
+      "date": "2026-10-19",
+      "sets": 4,
+      "reps": 8,
+      "weight": 100,
+      "loggedAt": "2026-10-31T03:39:58.667Z"
+    },
+    {
+      "id": "21a3d555-138b-4130-ab3b-775fcdc62281",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "programId": "prog_deadlift",
+      "week": 1,
+      "workoutId": "6f5364c3-cffb-4f35-af3c-4fa87a316e1d",
+      "date": "2026-10-22",
+      "sets": 4,
+      "reps": 8,
+      "weight": 90,
+      "loggedAt": "2026-10-22T07:00:00.000Z"
+    },
+    {
+      "id": "40f33575-0365-457e-8ef8-1778b3ababe0",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "programId": "prog_back_squat",
+      "week": 1,
+      "workoutId": "65bd9d3a-04b8-4d3d-a7fe-eb52667c3a79",
+      "date": "2026-10-19",
+      "sets": 4,
+      "reps": 8,
+      "weight": 100,
+      "loggedAt": "2026-10-19T07:00:00.000Z"
+    },
+    {
+      "id": "422069a2-9152-4b2f-ba70-2aaa03956855",
+      "userId": "b57dca47-4583-4db5-97aa-244a7bc262fc",
+      "programId": "prog_deadlift",
+      "week": 1,
+      "workoutId": "6f5364c3-cffb-4f35-af3c-4fa87a316e1d",
+      "date": "2026-10-22",
+      "sets": 4,
+      "reps": 8,
+      "weight": 140,
+      "loggedAt": "2026-10-22T07:00:00.000Z"
+    },
+    {
+      "id": "00bdc319-e381-4529-a877-33586593fab4",
+      "userId": "c60ed06a-b5c6-4c60-b8ed-75e9db44906b",
+      "programId": "prog_back_squat",
+      "week": 1,
+      "workoutId": "65bd9d3a-04b8-4d3d-a7fe-eb52667c3a79",
+      "date": "2026-10-19",
+      "sets": 4,
+      "reps": 8,
+      "weight": 60,
+      "loggedAt": "2026-10-19T07:00:00.000Z"
+    }
+  ],
+  "foodLogs": [
+    {
+      "id": "3c3359db-6133-445f-9a4e-38e38de285a5",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-28",
+      "meal": "breakfast",
+      "description": "2 eggs on 2 slices of sourdough with half an avocado and a flat white",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Sourdough",
+          "quantity": "× 2",
+          "grams": 76,
+          "kcal": 188,
+          "protein": 9.9,
+          "carbs": 31.2,
+          "fat": 2.6
+        },
+        {
+          "name": "Avocado",
+          "quantity": "× ½",
+          "grams": 75,
+          "kcal": 120,
+          "protein": 1.5,
+          "carbs": 6.4,
+          "fat": 11
+        },
+        {
+          "name": "Flat white",
+          "quantity": "× 1",
+          "grams": 240,
+          "kcal": 120,
+          "protein": 7.2,
+          "carbs": 10.8,
+          "fat": 6
+        }
+      ],
+      "totals": {
+        "kcal": 428,
+        "protein": 18.6,
+        "carbs": 48.4,
+        "fat": 19.6
+      },
+      "photo": null,
+      "createdAt": "2026-10-27T20:00:00.000Z"
+    },
+    {
+      "id": "9f109d04-55cf-484d-9315-54b9f2bb6dfc",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-28",
+      "meal": "lunch",
+      "description": "2 slices of brown bread, butter, 150g chicken with mayo and an apple",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Brown bread",
+          "quantity": "2 slices",
+          "grams": 76,
+          "kcal": 188,
+          "protein": 9.9,
+          "carbs": 31.2,
+          "fat": 2.6
+        },
+        {
+          "name": "Butter",
+          "quantity": "1 serve",
+          "grams": 10,
+          "kcal": 72,
+          "protein": 0.1,
+          "carbs": 0,
+          "fat": 8.1
+        },
+        {
+          "name": "Chicken",
+          "quantity": "150 g",
+          "grams": 150,
+          "kcal": 248,
+          "protein": 46.5,
+          "carbs": 0,
+          "fat": 5.4
+        },
+        {
+          "name": "Mayo",
+          "quantity": "1 serve",
+          "grams": 15,
+          "kcal": 102,
+          "protein": 0.2,
+          "carbs": 0.1,
+          "fat": 11.3
+        },
+        {
+          "name": "Apple",
+          "quantity": "× 1",
+          "grams": 180,
+          "kcal": 94,
+          "protein": 0.5,
+          "carbs": 25.2,
+          "fat": 0.4
+        }
+      ],
+      "totals": {
+        "kcal": 704,
+        "protein": 57.2,
+        "carbs": 56.5,
+        "fat": 27.8
+      },
+      "photo": null,
+      "createdAt": "2026-10-28T01:30:00.000Z"
+    },
+    {
+      "id": "b9f291f1-0010-452e-b393-8e2c08a24bd3",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-28",
+      "meal": "snack",
+      "description": "protein shake with milk and a banana",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Protein shake",
+          "quantity": "1 serve",
+          "grams": 30,
+          "kcal": 120,
+          "protein": 24,
+          "carbs": 2.4,
+          "fat": 1.8
+        },
+        {
+          "name": "Milk",
+          "quantity": "1 serve",
+          "grams": 250,
+          "kcal": 160,
+          "protein": 8.5,
+          "carbs": 12,
+          "fat": 9
+        },
+        {
+          "name": "Banana",
+          "quantity": "× 1",
+          "grams": 118,
+          "kcal": 105,
+          "protein": 1.3,
+          "carbs": 27.1,
+          "fat": 0.4
+        }
+      ],
+      "totals": {
+        "kcal": 385,
+        "protein": 33.8,
+        "carbs": 41.5,
+        "fat": 11.2
+      },
+      "photo": null,
+      "createdAt": "2026-10-28T05:00:00.000Z"
+    },
+    {
+      "id": "3cc66dad-6dc0-4cab-8d2b-b16363b066fc",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-28",
+      "meal": "dinner",
+      "description": "200g salmon, 1 cup rice and broccoli",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Salmon",
+          "quantity": "200 g",
+          "grams": 200,
+          "kcal": 416,
+          "protein": 40,
+          "carbs": 0,
+          "fat": 26
+        },
+        {
+          "name": "Rice",
+          "quantity": "1 cup",
+          "grams": 160,
+          "kcal": 208,
+          "protein": 4.3,
+          "carbs": 44.8,
+          "fat": 0.5
+        },
+        {
+          "name": "Broccoli",
+          "quantity": "1 serve",
+          "grams": 90,
+          "kcal": 31,
+          "protein": 2.5,
+          "carbs": 6.3,
+          "fat": 0.4
+        }
+      ],
+      "totals": {
+        "kcal": 655,
+        "protein": 46.8,
+        "carbs": 51.1,
+        "fat": 26.9
+      },
+      "photo": null,
+      "createdAt": "2026-10-28T08:00:00.000Z"
+    },
+    {
+      "id": "146b4988-9124-4e6c-bbcf-d9040d689e70",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-29",
+      "meal": "breakfast",
+      "description": "2 eggs on 2 slices of sourdough with half an avocado and a flat white",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Sourdough",
+          "quantity": "× 2",
+          "grams": 76,
+          "kcal": 188,
+          "protein": 9.9,
+          "carbs": 31.2,
+          "fat": 2.6
+        },
+        {
+          "name": "Avocado",
+          "quantity": "× ½",
+          "grams": 75,
+          "kcal": 120,
+          "protein": 1.5,
+          "carbs": 6.4,
+          "fat": 11
+        },
+        {
+          "name": "Flat white",
+          "quantity": "× 1",
+          "grams": 240,
+          "kcal": 120,
+          "protein": 7.2,
+          "carbs": 10.8,
+          "fat": 6
+        }
+      ],
+      "totals": {
+        "kcal": 428,
+        "protein": 18.6,
+        "carbs": 48.4,
+        "fat": 19.6
+      },
+      "photo": null,
+      "createdAt": "2026-10-28T20:00:00.000Z"
+    },
+    {
+      "id": "efae8d85-f231-4327-8119-f03d80348458",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-29",
+      "meal": "lunch",
+      "description": "2 slices of brown bread, butter, 150g chicken with mayo and an apple",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Brown bread",
+          "quantity": "2 slices",
+          "grams": 76,
+          "kcal": 188,
+          "protein": 9.9,
+          "carbs": 31.2,
+          "fat": 2.6
+        },
+        {
+          "name": "Butter",
+          "quantity": "1 serve",
+          "grams": 10,
+          "kcal": 72,
+          "protein": 0.1,
+          "carbs": 0,
+          "fat": 8.1
+        },
+        {
+          "name": "Chicken",
+          "quantity": "150 g",
+          "grams": 150,
+          "kcal": 248,
+          "protein": 46.5,
+          "carbs": 0,
+          "fat": 5.4
+        },
+        {
+          "name": "Mayo",
+          "quantity": "1 serve",
+          "grams": 15,
+          "kcal": 102,
+          "protein": 0.2,
+          "carbs": 0.1,
+          "fat": 11.3
+        },
+        {
+          "name": "Apple",
+          "quantity": "× 1",
+          "grams": 180,
+          "kcal": 94,
+          "protein": 0.5,
+          "carbs": 25.2,
+          "fat": 0.4
+        }
+      ],
+      "totals": {
+        "kcal": 704,
+        "protein": 57.2,
+        "carbs": 56.5,
+        "fat": 27.8
+      },
+      "photo": null,
+      "createdAt": "2026-10-29T01:30:00.000Z"
+    },
+    {
+      "id": "4f9ae9b3-038b-48f9-a04a-99b072e4d709",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-29",
+      "meal": "snack",
+      "description": "protein shake with milk and a banana",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Protein shake",
+          "quantity": "1 serve",
+          "grams": 30,
+          "kcal": 120,
+          "protein": 24,
+          "carbs": 2.4,
+          "fat": 1.8
+        },
+        {
+          "name": "Milk",
+          "quantity": "1 serve",
+          "grams": 250,
+          "kcal": 160,
+          "protein": 8.5,
+          "carbs": 12,
+          "fat": 9
+        },
+        {
+          "name": "Banana",
+          "quantity": "× 1",
+          "grams": 118,
+          "kcal": 105,
+          "protein": 1.3,
+          "carbs": 27.1,
+          "fat": 0.4
+        }
+      ],
+      "totals": {
+        "kcal": 385,
+        "protein": 33.8,
+        "carbs": 41.5,
+        "fat": 11.2
+      },
+      "photo": null,
+      "createdAt": "2026-10-29T05:00:00.000Z"
+    },
+    {
+      "id": "d05d81d2-6a34-416d-96cc-56e740b4f853",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-29",
+      "meal": "dinner",
+      "description": "200g salmon, 1 cup rice and broccoli",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Salmon",
+          "quantity": "200 g",
+          "grams": 200,
+          "kcal": 416,
+          "protein": 40,
+          "carbs": 0,
+          "fat": 26
+        },
+        {
+          "name": "Rice",
+          "quantity": "1 cup",
+          "grams": 160,
+          "kcal": 208,
+          "protein": 4.3,
+          "carbs": 44.8,
+          "fat": 0.5
+        },
+        {
+          "name": "Broccoli",
+          "quantity": "1 serve",
+          "grams": 90,
+          "kcal": 31,
+          "protein": 2.5,
+          "carbs": 6.3,
+          "fat": 0.4
+        }
+      ],
+      "totals": {
+        "kcal": 655,
+        "protein": 46.8,
+        "carbs": 51.1,
+        "fat": 26.9
+      },
+      "photo": null,
+      "createdAt": "2026-10-29T08:00:00.000Z"
+    },
+    {
+      "id": "2bcda350-6e05-46df-9b32-453f856a3cf8",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-30",
+      "meal": "breakfast",
+      "description": "2 eggs on 2 slices of sourdough with half an avocado and a flat white",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Sourdough",
+          "quantity": "× 2",
+          "grams": 76,
+          "kcal": 188,
+          "protein": 9.9,
+          "carbs": 31.2,
+          "fat": 2.6
+        },
+        {
+          "name": "Avocado",
+          "quantity": "× ½",
+          "grams": 75,
+          "kcal": 120,
+          "protein": 1.5,
+          "carbs": 6.4,
+          "fat": 11
+        },
+        {
+          "name": "Flat white",
+          "quantity": "× 1",
+          "grams": 240,
+          "kcal": 120,
+          "protein": 7.2,
+          "carbs": 10.8,
+          "fat": 6
+        }
+      ],
+      "totals": {
+        "kcal": 428,
+        "protein": 18.6,
+        "carbs": 48.4,
+        "fat": 19.6
+      },
+      "photo": null,
+      "createdAt": "2026-10-29T20:00:00.000Z"
+    },
+    {
+      "id": "f8f3d19c-8d8d-4c30-96b7-a2c5a699dcc3",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-30",
+      "meal": "lunch",
+      "description": "2 slices of brown bread, butter, 150g chicken with mayo and an apple",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Brown bread",
+          "quantity": "2 slices",
+          "grams": 76,
+          "kcal": 188,
+          "protein": 9.9,
+          "carbs": 31.2,
+          "fat": 2.6
+        },
+        {
+          "name": "Butter",
+          "quantity": "1 serve",
+          "grams": 10,
+          "kcal": 72,
+          "protein": 0.1,
+          "carbs": 0,
+          "fat": 8.1
+        },
+        {
+          "name": "Chicken",
+          "quantity": "150 g",
+          "grams": 150,
+          "kcal": 248,
+          "protein": 46.5,
+          "carbs": 0,
+          "fat": 5.4
+        },
+        {
+          "name": "Mayo",
+          "quantity": "1 serve",
+          "grams": 15,
+          "kcal": 102,
+          "protein": 0.2,
+          "carbs": 0.1,
+          "fat": 11.3
+        },
+        {
+          "name": "Apple",
+          "quantity": "× 1",
+          "grams": 180,
+          "kcal": 94,
+          "protein": 0.5,
+          "carbs": 25.2,
+          "fat": 0.4
+        }
+      ],
+      "totals": {
+        "kcal": 704,
+        "protein": 57.2,
+        "carbs": 56.5,
+        "fat": 27.8
+      },
+      "photo": null,
+      "createdAt": "2026-10-30T01:30:00.000Z"
+    },
+    {
+      "id": "65632f29-3308-4d2c-ad21-993080e05f3d",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-30",
+      "meal": "snack",
+      "description": "protein shake with milk and a banana",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Protein shake",
+          "quantity": "1 serve",
+          "grams": 30,
+          "kcal": 120,
+          "protein": 24,
+          "carbs": 2.4,
+          "fat": 1.8
+        },
+        {
+          "name": "Milk",
+          "quantity": "1 serve",
+          "grams": 250,
+          "kcal": 160,
+          "protein": 8.5,
+          "carbs": 12,
+          "fat": 9
+        },
+        {
+          "name": "Banana",
+          "quantity": "× 1",
+          "grams": 118,
+          "kcal": 105,
+          "protein": 1.3,
+          "carbs": 27.1,
+          "fat": 0.4
+        }
+      ],
+      "totals": {
+        "kcal": 385,
+        "protein": 33.8,
+        "carbs": 41.5,
+        "fat": 11.2
+      },
+      "photo": null,
+      "createdAt": "2026-10-30T05:00:00.000Z"
+    },
+    {
+      "id": "2ffb76ff-3d05-46e4-a324-c0cb100c16f4",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-30",
+      "meal": "dinner",
+      "description": "200g salmon, 1 cup rice and broccoli",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Salmon",
+          "quantity": "200 g",
+          "grams": 200,
+          "kcal": 416,
+          "protein": 40,
+          "carbs": 0,
+          "fat": 26
+        },
+        {
+          "name": "Rice",
+          "quantity": "1 cup",
+          "grams": 160,
+          "kcal": 208,
+          "protein": 4.3,
+          "carbs": 44.8,
+          "fat": 0.5
+        },
+        {
+          "name": "Broccoli",
+          "quantity": "1 serve",
+          "grams": 90,
+          "kcal": 31,
+          "protein": 2.5,
+          "carbs": 6.3,
+          "fat": 0.4
+        }
+      ],
+      "totals": {
+        "kcal": 655,
+        "protein": 46.8,
+        "carbs": 51.1,
+        "fat": 26.9
+      },
+      "photo": null,
+      "createdAt": "2026-10-30T08:00:00.000Z"
+    },
+    {
+      "id": "7c3b87bb-bd5e-47e1-bf2f-8220caf5e603",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-31",
+      "meal": "breakfast",
+      "description": "2 eggs on 2 slices of sourdough with half an avocado and a flat white",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Sourdough",
+          "quantity": "× 2",
+          "grams": 76,
+          "kcal": 188,
+          "protein": 9.9,
+          "carbs": 31.2,
+          "fat": 2.6
+        },
+        {
+          "name": "Avocado",
+          "quantity": "× ½",
+          "grams": 75,
+          "kcal": 120,
+          "protein": 1.5,
+          "carbs": 6.4,
+          "fat": 11
+        },
+        {
+          "name": "Flat white",
+          "quantity": "× 1",
+          "grams": 240,
+          "kcal": 120,
+          "protein": 7.2,
+          "carbs": 10.8,
+          "fat": 6
+        }
+      ],
+      "totals": {
+        "kcal": 428,
+        "protein": 18.6,
+        "carbs": 48.4,
+        "fat": 19.6
+      },
+      "photo": null,
+      "createdAt": "2026-10-30T20:00:00.000Z"
+    },
+    {
+      "id": "1c58dd26-2921-484d-9332-14d3200b35b3",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-31",
+      "meal": "lunch",
+      "description": "2 slices of brown bread, butter, 150g chicken with mayo and an apple",
+      "source": "voice",
+      "items": [
+        {
+          "name": "Brown bread",
+          "quantity": "2 slices",
+          "grams": 76,
+          "kcal": 188,
+          "protein": 9.9,
+          "carbs": 31.2,
+          "fat": 2.6
+        },
+        {
+          "name": "Butter",
+          "quantity": "1 serve",
+          "grams": 10,
+          "kcal": 72,
+          "protein": 0.1,
+          "carbs": 0,
+          "fat": 8.1
+        },
+        {
+          "name": "Chicken",
+          "quantity": "150 g",
+          "grams": 150,
+          "kcal": 248,
+          "protein": 46.5,
+          "carbs": 0,
+          "fat": 5.4
+        },
+        {
+          "name": "Mayo",
+          "quantity": "1 serve",
+          "grams": 15,
+          "kcal": 102,
+          "protein": 0.2,
+          "carbs": 0.1,
+          "fat": 11.3
+        },
+        {
+          "name": "Apple",
+          "quantity": "× 1",
+          "grams": 180,
+          "kcal": 94,
+          "protein": 0.5,
+          "carbs": 25.2,
+          "fat": 0.4
+        }
+      ],
+      "totals": {
+        "kcal": 704,
+        "protein": 57.2,
+        "carbs": 56.5,
+        "fat": 27.8
+      },
+      "photo": null,
+      "createdAt": "2026-10-31T01:30:00.000Z"
+    },
+    {
+      "id": "94c64250-acf3-4b49-8f8b-7cbd93236e21",
+      "userId": "3dfd5f4d-5525-442a-b003-58b23b7e5974",
+      "date": "2026-10-31",
+      "meal": "lunch",
+      "description": "250g chicken & two cups of veg",
+      "source": "photo",
+      "items": [
+        {
+          "name": "Chicken",
+          "quantity": "250 g",
+          "kcal": 413,
+          "protein": 77.5,
+          "carbs": 0,
+          "fat": 9
+        },
+        {
+          "name": "Veg",
+          "quantity": "2 cups",
+          "kcal": 96,
+          "protein": 4.8,
+          "carbs": 19.2,
+          "fat": 0.7
+        }
+      ],
+      "totals": {
+        "kcal": 509,
+        "protein": 82.3,
+        "carbs": 19.2,
+        "fat": 9.7
+      },
+      "photo": "3dfd5f4d-5525-442a-b003-58b23b7e5974_361696fe-b108-45c0-a9e8-086982f95596.jpg",
+      "createdAt": "2026-10-31T03:37:33.283Z"
+    }
+  ]
 }

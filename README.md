@@ -9,16 +9,20 @@ HYROX-style coaching app for Fitplus Well: Monday–Friday programming, Strava-s
 - **Focus Mode**: run the session one block at a time, full-screen with big type and a running clock, logging PB efforts as you go
 - **Finish flow**: tap-to-rate RPE, time and notes, then straight into a voice note for the coach
 - Light and dark mode (follows the phone, or set it in Profile)
+- **Strength progressions**: lifts linked to a coach-built block show this week's target, e.g. *Week 2 of 12 · 4 × 6 @ 120 kg (last week 8 × 100 kg, +20%)*. Athletes log sets × reps × weight and next week's weight is calculated from what they actually lifted
+- **Nutrition** (Fitness + Nutrition plan only): snap a photo, say it ("2 slices of brown bread, butter, 150g chicken with mayo") or type it → calories, protein, carbs and fat are estimated, editable, and saved to breakfast / lunch / dinner / snacks. Daily ring vs target, macros, 7-day chart
 - **Voice notes**: record in the browser, live speech-to-text while you talk (editable), audio + transcript sent to the coach
 - **PBs**: 14 HYROX benchmark efforts (1 km run, SkiErg, sled push/pull, wall balls, half/full sim, squat/deadlift 1RM…), log from inside a workout or the PB tab, "New PB" detection, progress sparklines
 - **Leaderboards** per effort (all-time / last 30 days), like Strava segments
-- **Memberships**: weekly, monthly, annual via Stripe Checkout — Apple Pay, Google Pay and cards
+- **Memberships**: Fitness or Fitness + Nutrition, each weekly / monthly / annual, via Stripe Checkout — Apple Pay, Google Pay and cards. Switching plan cancels the old Stripe subscription so nobody is billed twice
 
 **Coach HQ (`/admin`, password protected)**
 - Dashboard: active members, MRR, weekly compliance, open alerts, squad mood
 - **Athlete feedback feed**: every voice note summarised → mood (great → concern), headline, flags (injury, illness, fatigue, life stress, PB) and a suggested coach action; play the audio, read the transcript
 - **Alerts**: athlete misses 2 programmed workouts in a row (configurable), voice note mentions pain/injury/illness, payment failed. Missed-workout alerts auto-resolve when the athlete completes a session. Optional Slack/Discord/Zapier webhook ping
 - **Members (CRM)**: plan, status, renewal, last session, 14-day compliance, missed streak, mood, lifetime value, private coach notes, manual plan/status overrides, CSV export
+- **Strength blocks**: build 12-week (1–16) blocks per lift with sets, reps and a % change per week (negative = deload), with a live "from 100 kg" preview; link them to session blocks. Each athlete's target = their last logged weight × the coach's % (compounded over missed weeks), rounded to 2.5 kg (configurable)
+- **Nutrition in the CRM**: set each member's calorie and protein targets; see their 7-day average, days logged and recent meals with photos
 - **Programming**: week grid, create/edit workouts with ordered blocks, tag blocks as PB efforts, draft/publish, start from the HYROX template, copy a week forward
 - **Payments**: full payment history and total collected
 
@@ -34,6 +38,9 @@ cp .env.example .env     # optional for local — sensible defaults are built in
 npm start
 ```
 
+- Athlete app: http://localhost:3000 — demo login `sarah@demo.app` / `demo1234` (also `josh@`, `mia@`)
+- Coach HQ: http://localhost:3000/admin — dev password `coach123` (set `ADMIN_PASSWORD` for real use)
+
 Without Stripe keys the app runs in **demo mode**: the payment step shows a simulated Apple Pay sheet so you can test the full flow. `npm run reset` wipes `data/` so it reseeds on next start.
 
 ## Payments & Apple Pay (Stripe)
@@ -46,6 +53,12 @@ Without Stripe keys the app runs in **demo mode**: the payment step shows a simu
 4. Enable the **Customer portal** (Settings → Billing → Customer portal) so members can change card or cancel from "Manage billing".
 
 Prices are set in cents via `PRICE_WEEKLY`, `PRICE_MONTHLY`, `PRICE_ANNUAL` (`CURRENCY` defaults to AUD). Every payment, renewal and failure is written to the CRM.
+
+## Food estimates
+
+- **Photo, voice and text**: set `ANTHROPIC_API_KEY` and Claude estimates calories and macros from a photo and/or description, splitting the meal into items.
+- Without a key, typed or spoken meals are estimated from a built-in table of ~70 common foods using the amounts given ("150g", "2 slices", "half an avocado") or standard portions. Photos are still saved with the meal, but need the key to be analysed.
+- Athletes can always correct any number before saving. Estimates are a guide, not a clinical measurement.
 
 ## Voice notes
 

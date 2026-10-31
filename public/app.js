@@ -1,9 +1,13 @@
 // FPW — Fitplus Well · athlete app
 const state = {
   config: null, user: null, tab: 'today', week: null, summary: null, selected: null,
-  plan: 'monthly', authMode: 'login', lbEvent: 'run_1k', lbPeriod: 'all', openPb: null, changingPlan: false,
-  focus: null, finish: null,
+  planBase: 'monthly', tier: 'fitness', authMode: 'login', lbEvent: 'run_1k', lbPeriod: 'all', openPb: null, changingPlan: false,
+  focus: null, finish: null, nut: null, nutDate: null, nutToday: null, food: null,
 };
+const MEAL_LABEL = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', snack: 'Snacks' };
+const chosenPlanId = () => (state.tier === 'nutrition' ? `${state.planBase}_nutrition` : state.planBase);
+const kg = (n) => `${+n} kg`;
+const fmtNum = (n) => Number(n || 0).toLocaleString('en-AU');
 const evName = (k) => state.config.pbEvents[k]?.name || k;
 const evUnit = (k) => state.config.pbEvents[k]?.unit || 'time';
 const planOf = (id) => state.config.plans.find((p) => p.id === id);
@@ -67,13 +71,18 @@ forms.auth = async (f) => {
 // ---------- Paywall / Apple Pay ----------
 function renderPaywall(root) {
   const sub = { weekly: 'Flexible — cancel any week', monthly: 'Most popular', annual: 'Two months free' };
+  const plans = state.config.plans.filter((p) => p.tier === state.tier);
+  const tierCopy = state.tier === 'nutrition'
+    ? 'Everything in Fitness, plus a food diary — snap a photo or say what you ate and calories & macros are worked out for you.'
+    : 'The full coached programme, strength progressions, PB tracking, leaderboards and coach feedback.';
   root.innerHTML = `<div class="paywall">
     <div style="display:flex;justify-content:space-between;align-items:center">${brandHTML(state.config.appName, state.config.appFullName)}
       ${state.changingPlan ? '<button class="btn sm ghost" data-act="cancelChange">Back</button>' : '<button class="btn sm ghost" data-act="logout">Log out</button>'}</div>
     <h1>${state.changingPlan ? 'Change your plan' : `Welcome, ${esc(firstName())}.<br>Choose your plan.`}</h1>
-    <p class="muted">Every plan includes the full programme, PB tracking, leaderboards and coach feedback.</p>
-    <div class="plans">${state.config.plans.map((p) => `
-      <button class="plan ${state.plan === p.id ? 'sel' : ''}" data-act="pickPlan" data-plan="${p.id}">
+    <div class="seg tier-seg">${[['fitness', 'Fitness'], ['nutrition', 'Fitness + Nutrition']].map(([k, l]) => `<button class="${state.tier === k ? 'on' : ''}" data-act="pickTier" data-t="${k}">${l}</button>`).join('')}</div>
+    <p class="muted" style="margin:12px 0 0">${tierCopy}</p>
+    <div class="plans">${plans.map((p) => `
+      <button class="plan ${chosenPlanId() === p.id ? 'sel' : ''}" data-act="pickPlan" data-plan="${p.id.replace('_nutrition', '')}">
         <span class="radio"></span>
         <span class="plan-name">${esc(p.name)}<span class="plan-sub">${sub[p.id] || ''}</span></span>
         <span class="plan-price">${money(p.amount, p.currency)}<small>per ${p.interval}</small></span>
@@ -84,6 +93,7 @@ function renderPaywall(root) {
       <li><b>Today</b><span>Your programme unlocks and this week's sessions are ready.</span></li>
       <li><b>Every weekday</b><span>A new coached HYROX-style session — run it in Focus Mode.</span></li>
       <li><b>After each session</b><span>Log your effort and voice-note your coach. They see how it went.</span></li>
+      ${state.tier === 'nutrition' ? '<li><b>Every meal</b><span>Snap a photo or say what you ate — calories and macros are calculated for you.</span></li>' : ''}
       <li><b>Anytime</b><span>Change or cancel your plan from your profile.</span></li>
     </ol>
     <div class="pay-stack">
@@ -95,21 +105,22 @@ function renderPaywall(root) {
       : 'Demo mode — no Stripe keys configured, so payments are simulated and no money is taken.'}</p>
   </div>`;
 }
-actions.pickPlan = (el) => { state.plan = el.dataset.plan; render(); };
+actions.pickPlan = (el) => { state.planBase = el.dataset.plan; render(); };
+actions.pickTier = (el) => { state.tier = el.dataset.t; render(); };
 actions.cancelChange = () => { state.changingPlan = false; render(); };
 actions.pay = async (el) => {
   el.disabled = true;
   try {
-    const r = await api('/api/checkout', { method: 'POST', body: { plan: state.plan } });
+    const r = await api('/api/checkout', { method: 'POST', body: { plan: chosenPlanId() } });
     if (r.url) return (location.href = r.url);
     if (r.demo) demoSheet(el.dataset.method);
   } finally { el.disabled = false; }
 };
 function demoSheet(method) {
-  const p = planOf(state.plan);
+  const p = planOf(chosenPlanId());
   openModal(`
     <div class="s-demo">Demo payment — simulated, no money is taken</div>
-    <div class="s-row"><span>${esc(state.config.appFullName)} · ${esc(p.name)}</span><span>${money(p.amount, p.currency)}</span></div>
+    <div class="s-row"><span>${esc(p.tierName)} · ${esc(p.name)}</span><span>${money(p.amount, p.currency)}</span></div>
     <div class="s-row"><span>Billed</span><span>Every ${p.interval}</span></div>
     <div class="s-row"><span>Pay with</span><span>${method === 'card' ? 'Card •••• 4242' : 'Apple Pay (Wallet)'}</span></div>
     <div class="s-row" style="border:0"><span class="s-total">Total</span><span class="s-total">${money(p.amount, p.currency)}</span></div>
@@ -120,20 +131,21 @@ actions.closeModal = () => closeModal();
 actions.demoPay = async (el) => {
   el.textContent = 'Processing…'; el.disabled = true;
   await new Promise((r) => setTimeout(r, 700));
-  const r = await api('/api/checkout/demo-complete', { method: 'POST', body: { plan: state.plan, method: el.dataset.method } });
-  state.user = r.user; state.changingPlan = false;
+  const r = await api('/api/checkout/demo-complete', { method: 'POST', body: { plan: chosenPlanId(), method: el.dataset.method } });
+  state.user = r.user; state.changingPlan = false; state.week = null; state.summary = null;
   closeModal(); toast('Payment complete — welcome to FPW'); render();
 };
-actions.logout = async () => { await api('/api/auth/logout', { method: 'POST' }); Object.assign(state, { user: null, week: null, summary: null, tab: 'today' }); render(); };
+actions.logout = async () => { await api('/api/auth/logout', { method: 'POST' }); Object.assign(state, { user: null, week: null, summary: null, nut: null, nutToday: null, nutDate: null, tab: 'today' }); render(); };
 
 // ---------- Shell ----------
-const TABS = [['today', 'Today', 'home'], ['progress', 'Progress', 'progress'], ['board', 'Leaderboard', 'board'], ['profile', 'Profile', 'account']];
+const tabs = () => [['today', 'Today', 'home'], ['progress', 'Progress', 'progress'],
+  ...(state.user.nutrition ? [['nutrition', 'Nutrition', 'food']] : []), ['board', 'Leaderboard', 'board'], ['profile', 'Profile', 'account']];
 function renderShell(root) {
   root.innerHTML = `
     <header class="topbar">${brandHTML(state.config.appName, '')}
       <button class="avatar" data-act="tab" data-tab="profile" aria-label="Profile">${initials(state.user.name)}</button></header>
     <main id="view"></main>
-    <nav class="tabs">${TABS.map(([k, l, i]) => `<button class="tab ${state.tab === k ? 'on' : ''}" data-act="tab" data-tab="${k}">${ICONS[i]}${l}</button>`).join('')}</nav>`;
+    <nav class="tabs">${tabs().map(([k, l, i]) => `<button class="tab ${state.tab === k ? 'on' : ''}" data-act="tab" data-tab="${k}">${ICONS[i]}${l}</button>`).join('')}</nav>`;
   showTab();
 }
 actions.tab = (el) => { stopRecording(true); state.tab = el.dataset.tab; renderShell($('#app')); window.scrollTo(0, 0); };
@@ -143,9 +155,11 @@ async function showTab() {
     if (state.tab === 'today') await viewToday(v);
     else if (state.tab === 'progress') await viewProgress(v);
     else if (state.tab === 'board') await viewBoard(v);
+    else if (state.tab === 'nutrition') await viewNutrition(v);
     else viewProfile(v);
   } catch (e) {
     if (e.data?.needsPlan) { state.user.active = false; return render(); }
+    if (e.data?.needsNutrition) { state.user.nutrition = false; state.tab = 'today'; return renderShell($('#app')); }
     if (e.status === 401) { state.user = null; return render(); }
     v.innerHTML = `<div class="empty card">${esc(e.message)}</div>`;
   }
@@ -160,10 +174,15 @@ async function loadWeek(start) {
   }
 }
 async function loadSummary() { state.summary = await api('/api/summary').catch(() => null); }
-async function refresh() { await Promise.all([loadWeek(state.week?.start), loadSummary()]); if (state.tab === 'today') drawToday(); }
+async function loadNutToday() { state.nutToday = state.user.nutrition ? await api('/api/nutrition').catch(() => null) : null; }
+async function refresh() {
+  await Promise.all([loadWeek(state.week?.start), loadSummary(), loadNutToday()]);
+  if (state.tab === 'today') drawToday();
+  if (state.focus) drawFocus();
+}
 
 async function viewToday(v) {
-  if (!state.week || !state.summary) { v.innerHTML = '<div class="loading">Loading your week…</div>'; await Promise.all([state.week ? null : loadWeek(), loadSummary()]); }
+  if (!state.week || !state.summary) { v.innerHTML = '<div class="loading">Loading your week…</div>'; await Promise.all([state.week ? null : loadWeek(), loadSummary(), loadNutToday()]); }
   drawToday();
 }
 
@@ -199,7 +218,8 @@ function drawToday() {
       <div class="wk-nav"><button class="icon-btn" data-act="weekNav" data-d="-7" aria-label="Previous week">‹</button><button class="icon-btn" data-act="weekNav" data-d="7" aria-label="Next week">›</button></div></div>
     <div class="daystrip">${strip}</div>
     ${sel ? sessionHTML(sel) : '<div class="empty card">No sessions programmed for this week yet — check back soon.</div>'}
-    ${thisWeek && state.summary ? recapHTML(state.summary) : ''}`;
+    ${thisWeek && state.summary ? recapHTML(state.summary) : ''}
+    ${nutritionCardHTML()}`;
 }
 actions.selectDay = (el) => { stopRecording(true); state.selected = el.dataset.id; drawToday(); };
 actions.weekNav = async (el) => { stopRecording(true); state.selected = null; await loadWeek(addDays(state.week.start, Number(el.dataset.d))); drawToday(); };
@@ -207,7 +227,7 @@ actions.weekNav = async (el) => { stopRecording(true); state.selected = null; aw
 function sessionHTML(w) {
   const future = w.date > state.week.today;
   const c = w.completion;
-  const pbCount = w.blocks.filter((b) => b.pbEvent).length;
+  const pbCount = w.blocks.filter((b) => b.pbEvent || b.strength).length;
   const label = w.date === state.week.today ? "Today's session" : fmtDate(w.date, { weekday: 'long', day: 'numeric', month: 'short' });
   return `
   <section class="hero">
@@ -217,7 +237,7 @@ function sessionHTML(w) {
     <div class="specs">
       <div><b class="num">${w.duration || '—'}</b><span>minutes</span></div>
       <div><b class="num">${w.blocks.length}</b><span>blocks</span></div>
-      <div><b class="num">${pbCount}</b><span>PB effort${pbCount === 1 ? '' : 's'}</span></div>
+      <div><b class="num">${pbCount}</b><span>to log</span></div>
     </div>
     ${w.notes ? `<p class="coach"><b>Coach:</b> ${esc(w.notes)}</p>` : ''}
     ${c ? `<div class="done-state"><span class="tick">✓</span><div style="flex:1"><b>Session complete</b>
@@ -237,6 +257,7 @@ function blockHTML(b, i, future) {
     <div class="b-head"><span class="b-letter">${String.fromCharCode(65 + i)}</span>
       <div><h3>${esc(b.title)}</h3>${b.format ? `<div class="b-format">${esc(b.format)}</div>` : ''}</div></div>
     <ul class="b-lines">${lines(b.details)}</ul>
+    ${b.strength ? strengthHTML(b.strength, state.selected, future) : ''}
     ${b.pbEvent && !future ? `<div class="b-pb"><button class="btn sm outline" data-act="openLog" data-event="${b.pbEvent}" data-slot="slot-${i}">Log ${esc(evName(b.pbEvent))}</button><div id="slot-${i}"></div></div>` : ''}
   </li>`;
 }
@@ -297,6 +318,7 @@ function drawFocus() {
       <h1>${esc(b.title)}</h1>
       ${b.format ? `<div class="fm-format">${esc(b.format)}</div>` : ''}
       <ul class="fm-lines">${String(b.details || '').split('\n').filter((l) => l.trim()).map((l) => `<li>${esc(l)}</li>`).join('')}</ul>
+      ${b.strength ? strengthHTML(b.strength, w.id, false, true) : ''}
       ${b.pbEvent ? `<div style="margin-top:18px"><button class="btn lime sm" data-act="openLog" data-event="${b.pbEvent}" data-slot="fslot">Log ${esc(evName(b.pbEvent))}</button><div id="fslot"></div></div>` : ''}
     </div>
     <div class="fm-foot">
@@ -395,7 +417,7 @@ async function logResult(event, raw, date, workoutId) {
 let rec = null;
 const baseCloseModal = closeModal;
 // eslint-disable-next-line no-global-assign
-closeModal = function () { stopRecording(true); baseCloseModal(); };
+closeModal = function () { stopRecording(true); stopFoodMic(); baseCloseModal(); };
 
 function recorderHTML() {
   const canRecord = Boolean(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
@@ -576,7 +598,7 @@ function viewProfile(v) {
       <section class="card">
         <h3>Membership</h3>
         <dl class="kv" style="margin-top:14px">
-          <dt>Plan</dt><dd>${p ? `${esc(p.name)} · ${money(p.amount, p.currency)}/${p.interval}` : '—'}</dd>
+          <dt>Plan</dt><dd>${p ? `${esc(p.tierName)} · ${esc(p.name)}<div class="small muted" style="font-weight:500">${money(p.amount, p.currency)} per ${p.interval}</div>` : '—'}</dd>
           <dt>Status</dt><dd><span class="chip ${status[0]}">${esc(status[1])}</span></dd>
           <dt>${u.subStatus === 'cancelled' ? 'Access until' : 'Renews'}</dt><dd>${fmtDate(u.subRenews, { day: 'numeric', month: 'long', year: 'numeric' })}</dd>
           <dt>Member since</dt><dd>${fmtDate(u.createdAt, { month: 'long', year: 'numeric' })}</dd>
@@ -587,6 +609,12 @@ function viewProfile(v) {
             : u.subStatus === 'active' ? '<button class="btn danger" data-act="cancelSub">Cancel membership</button>' : ''}
         </div>
       </section>
+      ${u.nutrition ? `<form class="card form" data-form="targets">
+        <h3>Nutrition targets</h3><p class="muted small" style="margin:4px 0 14px">Your coach may set these for you.</p>
+        <div class="row2"><label>Calories per day<input type="number" name="calorieTarget" min="800" max="8000" value="${u.calorieTarget || ''}" placeholder="e.g. 2200"></label>
+          <label>Protein (g) per day<input type="number" name="proteinTarget" min="20" max="500" value="${u.proteinTarget || ''}" placeholder="e.g. 140"></label></div>
+        <button class="btn primary" type="submit">Save targets</button>
+      </form>` : `<section class="card upsell"><div><h3>Add nutrition coaching</h3><p class="muted small" style="margin:4px 0 0">Photo or voice food logging with calories worked out for you.</p></div><button class="btn dark sm" data-act="upgradeNutrition">See plans</button></section>`}
       <form class="card form" data-form="race">
         <h3>Race goal</h3><p class="muted small" style="margin:4px 0 14px">Add your next event to get a countdown on your Today screen.</p>
         <div class="row2"><label>Event<input name="raceName" value="${esc(u.raceName)}" placeholder="e.g. HYROX Sydney"></label>
@@ -609,12 +637,299 @@ actions.theme = (el) => {
   applyTheme(el.dataset.t);
   $$('.seg button').forEach((b) => b.classList.toggle('on', b === el));
 };
-actions.changePlan = () => { state.changingPlan = true; state.plan = state.user.plan || 'monthly'; render(); };
+forms.targets = async (f) => {
+  state.user = (await api('/api/me', { method: 'PATCH', body: { calorieTarget: f.elements.calorieTarget.value, proteinTarget: f.elements.proteinTarget.value } })).user;
+  state.nut = null; toast('Targets saved');
+};
+function setPlanFromUser() {
+  const cur = state.user.plan || 'monthly';
+  state.planBase = cur.replace('_nutrition', '');
+  state.tier = cur.endsWith('_nutrition') ? 'nutrition' : 'fitness';
+}
+actions.changePlan = () => { state.changingPlan = true; setPlanFromUser(); render(); };
+actions.upgradeNutrition = () => { state.changingPlan = true; setPlanFromUser(); state.tier = 'nutrition'; render(); window.scrollTo(0, 0); };
 actions.portal = async () => { const r = await api('/api/billing/portal', { method: 'POST' }); if (r.url) location.href = r.url; };
 actions.cancelSub = async () => {
   if (!confirm('Cancel your membership? You keep access until the end of the current period.')) return;
   state.user = (await api('/api/billing/cancel', { method: 'POST' })).user;
   viewProfile($('#view')); toast('Membership cancelled');
+};
+
+// ---------- Strength progression ----------
+function strengthHTML(st, wid, future, dark = false) {
+  const tgt = st.target;
+  const pctTxt = st.pct ? `${st.pct > 0 ? '+' : ''}${st.pct}% this week` : 'Baseline week';
+  const line = st.base && tgt != null
+    ? `Week ${st.base.week}: ${st.base.sets} × ${st.base.reps} @ ${kg(st.base.weight)} → ${st.pctApplied > 0 ? '+' : ''}${st.pctApplied}% = <b>${kg(tgt)}</b>`
+    : `No weight logged yet — pick one you can lift for ${st.sets} × ${st.reps} with 1–2 reps in reserve. Next week's weight is calculated from it.`;
+  const log = st.log;
+  return `<div class="strength ${dark ? 'dark' : ''}">
+    <div class="st-top"><span class="chip ${dark ? 'lime' : 'accent'}">${esc(st.lift)} · Week ${st.week} of ${st.totalWeeks}</span><span class="small st-pct">${pctTxt}</span></div>
+    <div class="st-target"><span class="num">${st.sets} × ${st.reps}</span>${tgt != null ? `<span class="at">@</span><span class="num">${kg(tgt)}</span>` : '<span class="at">@ your weight</span>'}</div>
+    <div class="st-line">${line}</div>
+    ${log ? `<div class="st-done"><span>✓ Logged ${log.sets} × ${log.reps} @ ${kg(log.weight)}</span>${future ? '' : '<button class="btn sm ghost" type="button" data-act="editLift">Edit</button>'}</div>` : ''}
+    ${future ? '' : `<form class="st-form ${log ? 'hidden' : ''}" data-form="logLift" data-wid="${wid}" data-pid="${st.programId}">
+      <label>Sets<input name="sets" type="number" inputmode="numeric" min="1" max="30" value="${log?.sets ?? st.sets}"></label>
+      <label>Reps<input name="reps" type="number" inputmode="numeric" min="1" max="100" value="${log?.reps ?? st.reps}"></label>
+      <label>Weight kg<input name="weight" type="number" inputmode="decimal" step="0.5" min="0.5" required value="${log?.weight ?? tgt ?? ''}" placeholder="kg"></label>
+      <button class="btn ${dark ? 'lime' : 'primary'}" type="submit">Save</button></form>`}
+  </div>`;
+}
+actions.editLift = (el) => el.closest('.strength').querySelector('.st-form')?.classList.toggle('hidden');
+forms.logLift = async (f) => {
+  const e = f.elements;
+  const r = await api('/api/lifts', { method: 'POST', body: { workoutId: f.dataset.wid, programId: f.dataset.pid,
+    sets: e.sets.value, reps: e.reps.value, weight: e.weight.value } });
+  const n = r.next;
+  toast(n && n.target != null ? `Saved. Next week: ${n.sets} × ${n.reps} @ ${kg(n.target)}` : 'Lift saved 💪');
+  await refresh();
+};
+
+// ---------- Nutrition ----------
+function nutritionCardHTML() {
+  if (!state.user.nutrition) {
+    return `<section class="card upsell" style="margin-top:14px"><div><span class="chip lime">Nutrition</span>
+      <h3 style="margin-top:10px">Fuel your training</h3><p class="muted small" style="margin:4px 0 0">Snap a photo or voice-note your meals and get calories and macros worked out for you.</p></div>
+      <button class="btn dark sm" data-act="upgradeNutrition">See plans</button></section>`;
+  }
+  const n = state.nutToday;
+  if (!n) return '';
+  const k = n.totals.kcal, t = n.target.kcal;
+  return `<section class="card nut-card" style="margin-top:14px">
+    <div class="sec-head" style="margin:0 0 12px"><h3>Nutrition today</h3><button class="btn sm" data-act="tab" data-tab="nutrition">Log a meal</button></div>
+    <div class="nut-line"><b class="num">${fmtNum(k)}</b><span>${t ? `of ${fmtNum(t)} kcal` : 'kcal'}</span>
+      <span class="muted small" style="margin-left:auto">P ${Math.round(n.totals.protein)}g · C ${Math.round(n.totals.carbs)}g · F ${Math.round(n.totals.fat)}g</span></div>
+    ${t ? `<div class="race-bar" style="height:8px"><i style="width:${Math.min(100, (k / t) * 100)}%;${k > t ? 'background:var(--warn)' : ''}"></i></div>` : ''}
+  </section>`;
+}
+
+async function viewNutrition(v) {
+  state.nutDate = state.nutDate || todayYmd();
+  if (!state.nut || state.nut.date !== state.nutDate) {
+    v.innerHTML = '<div class="loading">Loading your food diary…</div>';
+    state.nut = await api(`/api/nutrition?date=${state.nutDate}`);
+  }
+  drawNutrition();
+}
+async function reloadNutrition() {
+  state.nut = await api(`/api/nutrition?date=${state.nutDate || todayYmd()}`);
+  if (state.nut.date === state.nut.today) state.nutToday = state.nut;
+  if (state.tab === 'nutrition') drawNutrition();
+  else if (state.tab === 'today') drawToday();
+}
+function drawNutrition() {
+  const n = state.nut;
+  const t = n.totals, target = n.target.kcal, pTarget = n.target.protein;
+  const C = 2 * Math.PI * 52;
+  const pct = target ? Math.min(1, t.kcal / target) : 0;
+  const left = target ? target - t.kcal : null;
+  const isToday = n.date === n.today;
+  const macro = (label, g, goal, color) => `<div class="macro"><div class="m-top"><span>${label}</span><b class="num">${Math.round(g)}${goal ? `<small>/${goal}g</small>` : 'g'}</b></div>
+    <div class="m-bar"><i style="width:${goal ? Math.min(100, (g / goal) * 100) : Math.min(100, g / 3)}%;background:${color}"></i></div></div>`;
+  const maxK = Math.max(target || 0, ...n.week.map((d) => d.kcal), 1);
+  const byMeal = (m) => n.logs.filter((l) => l.meal === m);
+  $('#view').innerHTML = `
+    <div class="page-title" style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px">
+      <div><h1>Nutrition</h1><p class="muted" style="margin:4px 0 0">${isToday ? 'Today' : fmtDate(n.date, { weekday: 'long', day: 'numeric', month: 'short' })}</p></div>
+      <div class="wk-nav" style="display:flex;gap:6px"><button class="icon-btn" data-act="nutDay" data-d="-1" aria-label="Previous day">‹</button>
+        <button class="icon-btn" data-act="nutDay" data-d="1" aria-label="Next day" ${isToday ? 'disabled' : ''}>›</button></div></div>
+    <section class="card nut-summary">
+      <div class="ring big"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--surface-2)" stroke-width="11"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="${left != null && left < 0 ? 'var(--warn)' : 'var(--brand)'}" stroke-width="11" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - pct)}"/></svg>
+        <div class="lbl"><div><b class="num">${fmtNum(t.kcal)}</b><span>${target ? `of ${fmtNum(target)} kcal` : 'kcal eaten'}</span></div></div></div>
+      <div class="nut-side">
+        <div class="left-kcal">${left == null ? '<span class="muted small">Set a daily target in Profile</span>' : left >= 0 ? `<b class="num">${fmtNum(left)}</b> kcal left` : `<b class="num" style="color:var(--warn)">${fmtNum(-left)}</b> kcal over`}</div>
+        ${macro('Protein', t.protein, pTarget, 'var(--brand)')}
+        ${macro('Carbs', t.carbs, null, '#e0a33a')}
+        ${macro('Fat', t.fat, null, '#7a8cf0')}
+      </div>
+    </section>
+    <button class="btn primary block lg" style="margin:14px 0 4px" data-act="addFood">${ICONS.camera} Log a meal</button>
+    ${n.meals.map((m) => {
+      const logs = byMeal(m);
+      const kcal = logs.reduce((a, l) => a + l.totals.kcal, 0);
+      return `<div class="sec-head"><h3>${MEAL_LABEL[m]}</h3><span class="muted small">${kcal ? `${fmtNum(kcal)} kcal · ` : ''}<a href="#" data-act="addFood" data-meal="${m}">+ Add</a></span></div>
+        ${logs.length ? `<div class="card food-list">${logs.map(foodRowHTML).join('')}</div>` : ''}`;
+    }).join('')}
+    <section class="card" style="margin-top:22px">
+      <div class="sec-head" style="margin:0 0 12px"><h3>Last 7 days</h3>${target ? `<span class="muted small">Target ${fmtNum(target)} kcal</span>` : ''}</div>
+      <div class="kbars">${target ? `<div class="kline" style="bottom:${(target / maxK) * 100}%"></div>` : ''}${n.week.map((d) => `
+        <div class="kbar ${d.date === n.date ? 'on' : ''}" title="${fmtNum(d.kcal)} kcal"><i style="height:${(d.kcal / maxK) * 100}%"></i><span>${dayName(d.date).slice(0, 2)}</span></div>`).join('')}</div>
+    </section>`;
+}
+function foodRowHTML(l) {
+  const names = l.items.map((i) => i.name).join(', ');
+  return `<div class="food-row">
+    ${l.photoUrl ? `<img class="food-thumb" src="${l.photoUrl}" alt="">` : `<span class="food-thumb ic">${l.source === 'voice' ? ICONS.micLg : ICONS.food}</span>`}
+    <div class="food-body"><div class="food-name">${esc(names)}</div>
+      <div class="small muted">P ${Math.round(l.totals.protein)}g · C ${Math.round(l.totals.carbs)}g · F ${Math.round(l.totals.fat)}g</div></div>
+    <div class="food-kcal num">${fmtNum(l.totals.kcal)}<small>kcal</small></div>
+    <button class="icon-btn sm-x" data-act="delFood" data-id="${l.id}" aria-label="Delete">×</button>
+  </div>`;
+}
+actions.nutDay = async (el) => {
+  const d = addDays(state.nutDate || todayYmd(), Number(el.dataset.d));
+  if (d > todayYmd()) return;
+  state.nutDate = d;
+  await viewNutrition($('#view'));
+};
+actions.delFood = async (el) => {
+  if (!confirm('Delete this entry?')) return;
+  await api(`/api/nutrition/logs/${el.dataset.id}`, { method: 'DELETE' });
+  await reloadNutrition();
+};
+
+// Add-food sheet: photo, voice or type → estimate → review → save
+const defaultMeal = () => { const h = new Date().getHours(); return h < 11 ? 'breakfast' : h < 15 ? 'lunch' : h < 17 ? 'snack' : 'dinner'; };
+actions.addFood = (el) => {
+  state.food = { meal: el.dataset.meal || defaultMeal(), text: '', source: 'text', photoBlob: null, photoUrl: null, est: null, photoId: null };
+  drawFoodSheet();
+};
+function syncFoodText() { const t = $('#food-text'); if (t && state.food) state.food.text = t.value; }
+function drawFoodSheet() {
+  const f = state.food;
+  const canTalk = Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
+  const chips = `<div class="meal-chips">${Object.keys(MEAL_LABEL).map((m) => `<button class="${m === f.meal ? 'on' : ''}" data-act="foodMeal" data-m="${m}">${MEAL_LABEL[m].replace('Snacks', 'Snack')}</button>`).join('')}</div>`;
+  if (!f.est) {
+    openModal(`<h2 style="margin-bottom:14px">Log a meal</h2>${chips}
+      <div class="capture">
+        <label class="cap-btn">${ICONS.camera}<span>Photo</span><input type="file" accept="image/*" id="food-photo" hidden></label>
+        ${canTalk ? `<button class="cap-btn" id="food-mic" data-act="foodMic">${ICONS.micLg}<span>Say it</span></button>` : ''}
+        <button class="cap-btn" data-act="foodType">${ICONS.type}<span>Type it</span></button>
+      </div>
+      ${f.photoUrl ? `<div class="food-photo"><img src="${f.photoUrl}" alt="Meal photo"><button class="icon-btn" data-act="foodNoPhoto" aria-label="Remove photo">×</button></div>` : ''}
+      <textarea id="food-text" rows="3" placeholder="e.g. 2 slices of brown bread, butter, 150g chicken with mayo">${esc(f.text)}</textarea>
+      <p class="small muted" style="margin:0 0 14px">${state.config.aiFood
+        ? 'Snap it, say it or type it — calories and macros are worked out for you.'
+        : 'Say it or type it — add amounts like “150g” or “2 slices” for a better estimate. Photos are saved with the meal.'}</p>
+      <button class="btn primary block lg" data-act="foodEstimate">Calculate calories</button>`, { sheet: true });
+    $('#food-photo').onchange = (e) => onFoodPhoto(e.target.files?.[0]);
+    return;
+  }
+  const items = f.est.items;
+  openModal(`<h2 style="margin-bottom:6px">Check & save</h2>
+    <p class="small muted" style="margin:0 0 14px">${esc(f.est.notes || '')} Tap a number to adjust it.</p>
+    ${chips}
+    ${f.photoUrl ? `<img class="food-hero" src="${f.photoUrl}" alt="">` : ''}
+    <div class="est-list">${items.map((i, idx) => `
+      <div class="est-row ${i.unknown ? 'unknown' : ''}" data-i="${idx}">
+        <div class="est-name"><input data-k="name" value="${esc(i.name)}" aria-label="Food"><span class="small muted">${[i.quantity, i.unknown ? 'not recognised — enter calories' : ''].filter(Boolean).map(esc).join(' · ')}</span></div>
+        <label class="est-kcal"><input data-k="kcal" type="number" inputmode="numeric" min="0" value="${i.kcal ?? ''}" placeholder="kcal"><span>kcal</span></label>
+        <button class="icon-btn sm-x" data-act="foodDropItem" data-i="${idx}" aria-label="Remove">×</button>
+      </div>`).join('') || '<p class="muted small">Nothing recognised — go back and add more detail.</p>'}</div>
+    <button class="btn sm ghost" data-act="foodAddItem" style="margin:6px 0 10px">+ Add item</button>
+    <div class="est-total"><span>Total</span><b class="num" id="est-total"></b></div>
+    <button class="btn primary block lg" data-act="foodSave">Save to ${MEAL_LABEL[f.meal].replace('Snacks', 'snacks').toLowerCase()}</button>
+    <button class="btn ghost block" style="margin-top:6px" data-act="foodBack">Back</button>`, { sheet: true });
+  updateEstTotal();
+  $('.est-list')?.addEventListener('input', () => { readEstItems(); updateEstTotal(); });
+}
+function readEstItems() {
+  for (const row of $$('.est-row')) {
+    const it = state.food.est.items[Number(row.dataset.i)];
+    it.name = $('[data-k=name]', row).value;
+    const v = $('[data-k=kcal]', row).value;
+    const newK = v === '' ? null : Math.max(0, Math.round(Number(v)));
+    if (it.kcal && newK != null && newK !== it.kcal) { const r = newK / it.kcal; it.protein *= r; it.carbs *= r; it.fat *= r; }
+    it.kcal = newK;
+    if (newK != null) it.unknown = false;
+  }
+}
+function updateEstTotal() {
+  const k = state.food.est.items.reduce((a, i) => a + (Number(i.kcal) || 0), 0);
+  const el = $('#est-total');
+  if (el) el.innerHTML = `${fmtNum(k)} kcal <small class="muted">≈ ${fmtNum(Math.round(k * 4.184))} kJ</small>`;
+}
+actions.foodMeal = (el) => {
+  if (state.food.est) readEstItems(); else syncFoodText();
+  state.food.meal = el.dataset.m; drawFoodSheet();
+};
+actions.foodType = () => { const t = $('#food-text'); t.focus(); };
+actions.foodNoPhoto = () => { syncFoodText(); Object.assign(state.food, { photoBlob: null, photoUrl: null, source: 'text' }); drawFoodSheet(); };
+actions.foodBack = () => { readEstItems(); state.food.est = null; drawFoodSheet(); };
+actions.foodDropItem = (el) => { readEstItems(); state.food.est.items.splice(Number(el.dataset.i), 1); drawFoodSheet(); };
+actions.foodAddItem = () => { readEstItems(); state.food.est.items.push({ name: '', quantity: '', kcal: null, protein: 0, carbs: 0, fat: 0, unknown: true }); drawFoodSheet(); $$('.est-row [data-k=name]').pop()?.focus(); };
+
+async function resizeImage(file, max = 1280) {
+  try {
+    const img = await createImageBitmap(file);
+    const sc = Math.min(1, max / Math.max(img.width, img.height));
+    const c = document.createElement('canvas');
+    c.width = Math.round(img.width * sc); c.height = Math.round(img.height * sc);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    return await new Promise((r) => c.toBlob((b) => r(b || file), 'image/jpeg', 0.82));
+  } catch { return file; }
+}
+async function onFoodPhoto(file) {
+  if (!file) return;
+  syncFoodText();
+  const blob = await resizeImage(file);
+  Object.assign(state.food, { photoBlob: blob, photoUrl: URL.createObjectURL(blob), source: 'photo' });
+  drawFoodSheet();
+  if (state.config.aiFood) actions.foodEstimate($('[data-act=foodEstimate]'));
+  else $('#food-text')?.focus();
+}
+
+let foodSR = null;
+function stopFoodMic() { if (foodSR) { try { foodSR.stop(); } catch {} foodSR = null; } }
+actions.foodMic = (el) => {
+  if (foodSR) { stopFoodMic(); return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const sr = new SR();
+  sr.continuous = true; sr.interimResults = true; sr.lang = navigator.language || 'en-AU';
+  const ta = $('#food-text');
+  let finalText = ta.value ? ta.value.trim() + ' ' : '';
+  sr.onresult = (e) => {
+    state.food.spoken = true;
+    let interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) finalText += e.results[i][0].transcript.trim() + ' ';
+      else interim += e.results[i][0].transcript;
+    }
+    if (ta.isConnected) ta.value = (finalText + interim).trim();
+  };
+  sr.onend = () => {
+    $('#food-mic')?.classList.remove('on');
+    const spoke = foodSR === sr;
+    foodSR = null;
+    if (spoke && ta.isConnected && ta.value.trim()) { state.food.source = state.food.photoBlob ? 'photo' : 'voice'; actions.foodEstimate($('[data-act=foodEstimate]')); }
+  };
+  sr.onerror = (e) => { if (e.error === 'not-allowed') toast('Microphone access was blocked. Allow it in your browser settings.'); };
+  try { sr.start(); foodSR = sr; el.classList.add('on'); el.querySelector('span').textContent = 'Listening… tap to stop'; } catch {}
+};
+actions.foodEstimate = async (el) => {
+  stopFoodMic();
+  syncFoodText();
+  const f = state.food;
+  if (!f.text.trim() && !f.photoBlob) throw new Error('Add a photo, say it or type what you ate.');
+  if (el) { el.disabled = true; el.textContent = 'Calculating…'; }
+  try {
+    const fd = new FormData();
+    fd.append('text', f.text);
+    if (f.photoBlob) fd.append('photo', f.photoBlob, 'meal.jpg');
+    const r = await api('/api/nutrition/estimate', { method: 'POST', body: fd });
+    if (r.mealGuess) f.meal = r.mealGuess;
+    if (!f.photoBlob) f.source = f.spoken ? 'voice' : 'text';
+    f.photoId = r.photo;
+    f.est = r;
+    drawFoodSheet();
+  } finally { if (el?.isConnected) { el.disabled = false; el.textContent = 'Calculate calories'; } }
+};
+actions.foodSave = async (el) => {
+  readEstItems();
+  const f = state.food;
+  const items = f.est.items.filter((i) => i.name.trim() || i.kcal);
+  const missing = items.find((i) => i.kcal == null);
+  if (missing) throw new Error(`Add calories for “${missing.name || 'item'}” or remove it.`);
+  if (!items.length) throw new Error('Add at least one food.');
+  el.disabled = true;
+  try {
+    const r = await api('/api/nutrition/logs', { method: 'POST', body: { date: state.nutDate || todayYmd(), meal: f.meal,
+      description: f.text, source: f.source, photo: f.photoId, items } });
+    baseCloseModal(); state.food = null;
+    toast(`Added to ${MEAL_LABEL[r.log.meal].toLowerCase()} · ${fmtNum(r.log.totals.kcal)} kcal`);
+    await reloadNutrition();
+  } finally { if (el.isConnected) el.disabled = false; }
 };
 
 boot().catch((e) => { $('#app').innerHTML = `<div class="empty">Couldn't load the app: ${esc(e.message)}</div>`; });
